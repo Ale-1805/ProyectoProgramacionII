@@ -1,5 +1,5 @@
 package ec.edu.uce.Dominio;
-
+import ec.edu.uce.Util.ValidacionBodega;
 public class Bodega {
     //Atributos
     private String nombre;
@@ -13,9 +13,20 @@ public class Bodega {
         productos = nProductos;
         usuarios = nUsuarios;
     }
+
+    public Bodega (){
+        nombre = "";
+        ubicacion = "";
+        productos = "";
+        usuarios = "";
+    }
     //Setters y getters
     public void setNombre(String nNombre) {
-        nombre = nNombre;
+        if(ValidacionBodega.validarNombre(nNombre)) {
+            nombre = nNombre;
+        }else{
+            System.out.println("Error: Nombre mal ingresado");
+        }
     }
 
     public String getNombre() {
@@ -23,7 +34,11 @@ public class Bodega {
     }
 
     public void setProductos(String nProductos) {
-        productos = nProductos;
+        if(ValidacionBodega.validarProductos(nProductos)) {
+            productos = nProductos;
+        }else{
+            System.out.println("Error: Productos mal ingresados");
+        }
     }
 
     public String getProductos() {
@@ -31,7 +46,11 @@ public class Bodega {
     }
 
     public void setUbicacion(String nUbicacion) {
-        ubicacion = nUbicacion;
+        if(ValidacionBodega.validarUbicacion(nUbicacion)) {
+            ubicacion = nUbicacion;
+        }else {
+            System.out.println("Error: Ubicacion mal ingresada");
+        }
     }
 
     public String getUbicacion() {
@@ -39,10 +58,22 @@ public class Bodega {
     }
 
     public void setUsuarios(String nUsuarios) {
-        usuarios = nUsuarios;
+        if(ValidacionBodega.validarUsuarios(nUsuarios)) {
+            usuarios = nUsuarios;
+        }else {
+            System.out.println("Error: Usuarios mal ingresados");
+        }
     }
 
     public String getUsuarios() {
         return usuarios;
+    }
+    public String mostrarBodega() {
+        return "Producto{" +
+                ", Nombre= '" + getNombre() + '\'' +
+                ", Ubicacion= " + getUbicacion() +
+                ", Productos= " + getProductos() +
+                ", Usuarios= "+ getUsuarios() +
+                '}';
     }
 }

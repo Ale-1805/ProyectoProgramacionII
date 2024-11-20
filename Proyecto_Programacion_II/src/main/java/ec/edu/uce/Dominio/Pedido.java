@@ -9,16 +9,25 @@ public class Pedido {
     private String itemPedido;
 
     //Constructor
-    public Pedido (String newide, LocalDate newfecha, String newestado, String newitemPedido){
-        id = newide;
-        fecha = newfecha;
-        estado = newestado;
-        itemPedido = newitemPedido;
+    public Pedido (String ide, LocalDate fecha, String estado, String itemPedido){
+        this.id = ide;
+        this.fecha = fecha;
+        this.estado = estado;
+        this.itemPedido = itemPedido;
+    }
+    public Pedido (){
+        this.id = id;
+        this.fecha = fecha;
+        this.estado = estado;
+        this.itemPedido = itemPedido;
     }
     //SET y GET
 
     public void setId(String id) {
-        this.id = id;
+        if (id != null && !id.trim().isEmpty()) {
+            this.id = id;
+        } else
+            System.out.println("El ID no puede ser nulo o vacío.");
     }
 
     public String getId() {
@@ -26,7 +35,10 @@ public class Pedido {
     }
 
     public void setFecha(LocalDate fecha) {
-        this.fecha = fecha;
+        if (fecha != null) {
+            this.fecha = fecha;
+        } else
+            System.out.println("La fecha no puede ser nula.");
     }
 
     public LocalDate getFecha() {
@@ -34,7 +46,10 @@ public class Pedido {
     }
 
     public void setEstado(String estado) {
-        this.estado = estado;
+        if (estado != null && (estado.equalsIgnoreCase("Entregado") || estado.equalsIgnoreCase("En Camino"))) {
+            this.estado = estado;
+        } else
+            System.out.println("El estado debe ser 'Entregado' o 'En Camino'");
     }
 
     public String getEstado() {
@@ -42,11 +57,13 @@ public class Pedido {
     }
 
     public void setItemPedido(String itemPedido) {
-        this.itemPedido = itemPedido;
+        if (itemPedido != null && !itemPedido.trim().isEmpty()) {
+            this.itemPedido = itemPedido;
+        } else
+            System.out.println("El item del pedido no puede ser nulo.");
     }
 
     public String getItemPedido() {
         return itemPedido;
     }
-
 }

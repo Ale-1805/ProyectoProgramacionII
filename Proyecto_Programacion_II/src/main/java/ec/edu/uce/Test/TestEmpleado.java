@@ -5,32 +5,55 @@ import java.util.Date;
 
 public class TestEmpleado {
     public static void main(String[] args) {
-        // Crear un objeto de la clase Empleado
-        Empleado empleado = new Empleado("Juan Pérez", new Date(), null, "Activo");
 
-        // Mostrar datos iniciales del empleado
-        System.out.println("Datos iniciales del empleado:");
-        System.out.println("Nombre: " + empleado.getNombre());
-        System.out.println("Fecha de Ingreso: " + empleado.getFechaIngreso());
-        System.out.println("Fecha de Salida: " + empleado.getFechaSalida());
-        System.out.println("Estado: " + empleado.getEstado());
+        Object empleado = new Empleado();
+        pruebaconstructor();
+        pruebaconstructor1("Juan Perez", new Date(115, 5, 15), new Date(119, 5, 15), "Activo");
+        pruebaSetNombre("Carlos Lopez");
+        pruebaSetFechaIngreso(new Date(118, 5, 15));
+        pruebaSetFechaSalida(new Date(120, 5, 15));
+        pruebaSetEstado("Inactivo");
+    }
 
-        // Modificar los datos del empleado
-        empleado.setNombre("María López");
-        empleado.setFechaIngreso(new Date());
-        empleado.setFechaSalida(new Date());
-        empleado.setEstado("Inactivo");
+    //constructor por defecto
+    public static void pruebaconstructor(){
+        Empleado empleado = new Empleado();
+        System.out.println("Constructor por defecto creado.");
+    }
 
-        // Mostrar datos actualizados del empleado
-        System.out.println("\nDatos actualizados del empleado:");
-        System.out.println("Nombre: " + empleado.getNombre());
-        System.out.println("Fecha de Ingreso: " + empleado.getFechaIngreso());
-        System.out.println("Fecha de Salida: " + empleado.getFechaSalida());
-        System.out.println("Estado: " + empleado.getEstado());
-
-        // Mostrar solo el nombre usando el método DatosEmpleado
-        System.out.println("\nUsando el método DatosEmpleado:");
+    //constructor con parámetros
+    public static void pruebaconstructor1(String nombre, Date fechaIngreso, Date fechaSalida, String estado){
+        Empleado empleado = new Empleado(nombre, fechaIngreso, fechaSalida, estado);
+        System.out.println("Constructor con parámetros creado.");
         empleado.DatosEmpleado();
+    }
+
+    //setNombre
+    public static void pruebaSetNombre(String nombre){
+        Empleado empleado = new Empleado();
+        empleado.setNombre(nombre);
+        System.out.println("Nombre Set: " + empleado.getNombre());
+    }
+
+    //setFechaIngreso
+    public static void pruebaSetFechaIngreso(Date fechaIngreso){
+        Empleado empleado = new Empleado();
+        empleado.setFechaIngreso(fechaIngreso);
+        System.out.println("Fecha Ingreso Set: " + empleado.getFechaIngreso());
+    }
+
+    //setFechaSalida
+    public static void pruebaSetFechaSalida(Date fechaSalida){
+        Empleado empleado = new Empleado();
+        empleado.setFechaSalida(fechaSalida);
+        System.out.println("Fecha Salida Set: " + empleado.getFechaSalida());
+    }
+
+    //setEstado
+    public static void pruebaSetEstado(String estado){
+        Empleado empleado = new Empleado();
+        empleado.setEstado(estado);
+        System.out.println("Estado Set: " + empleado.getEstado());
     }
 }
 

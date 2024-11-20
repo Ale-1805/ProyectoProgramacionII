@@ -80,6 +80,6 @@ public class ValidacionesJefeBodega {
         jefe.mostrarDatos();
         jefe.consultarReportes();
         jefe.consultarEstadoDeProductos();
-        jefe.devolverProducto("Producto A");
+        jefe.devolverProducto("Producto");
     }
 }

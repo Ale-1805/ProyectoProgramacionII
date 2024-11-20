@@ -9,16 +9,25 @@ public class Empleado {
     private String estado;
 
     //constructor
-    public Empleado (String newnombre, Date newfechaIngreso, Date newfechaSalida, String newestado){
-        nombre = newnombre;
-        fechaIngreso = newfechaIngreso;
-        fechaSalida = newfechaSalida;
-        estado = newestado;
+    public Empleado (String nombre, Date fechaIngreso, Date fechaSalida, String estado){
+        this.nombre = nombre;
+        this.fechaIngreso = fechaIngreso;
+        this.fechaSalida = fechaSalida;
+        this.estado = estado;
+    }
+    public Empleado (){
+        this.nombre = nombre;
+        this.fechaIngreso = fechaIngreso;
+        this.fechaSalida = fechaSalida;
+        this.estado = estado;
     }
     //SET y GET
 
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+        if (nombre != null && !nombre.trim().isEmpty() && nombre.length() >= 3 && nombre.length() <= 50) {
+            this.nombre = nombre;
+        } else
+            System.out.println("El nombre debe tener entre 3 y 50 caracteres y no puede estar vacío.");
     }
 
     public String getNombre() {
@@ -26,7 +35,10 @@ public class Empleado {
     }
 
     public void setFechaIngreso(Date fechaIngreso) {
-        this.fechaIngreso = fechaIngreso;
+        if (fechaIngreso != null && fechaIngreso.before(new Date())) {
+            this.fechaIngreso = fechaIngreso;
+        } else
+            System.out.println("La fecha de ingreso debe ser anterior o igual a la fecha actual.");
     }
 
     public Date getFechaIngreso() {
@@ -34,7 +46,10 @@ public class Empleado {
     }
 
     public void setFechaSalida(Date fechaSalida) {
-        this.fechaSalida = fechaSalida;
+        if (fechaSalida == null || (fechaIngreso != null && fechaSalida.after(fechaIngreso))) {
+            this.fechaSalida = fechaSalida;
+        } else
+            System.out.println("La fecha de salida debe ser posterior a la fecha de ingreso.");
     }
 
     public Date getFechaSalida() {
@@ -42,7 +57,10 @@ public class Empleado {
     }
 
     public void setEstado(String estado) {
-        this.estado = estado;
+        if (estado != null && (estado.equalsIgnoreCase("Activo") || estado.equalsIgnoreCase("Inactivo"))) {
+            this.estado = estado;
+        } else
+            System.out.println("El estado debe ser 'Activo' o 'Inactivo'");
     }
 
     public String getEstado() {
@@ -50,7 +68,9 @@ public class Empleado {
     }
 
     public void DatosEmpleado(){
-        System.out.println(nombre);
+        System.out.println("Nombre: " + getNombre());
+        System.out.println("Fecha de Ingreso: " + (getFechaIngreso() != null ? getFechaIngreso() : "No registrada"));
+        System.out.println("Fecha de Salida: " + (getFechaSalida() != null ? getFechaSalida() : "No registrada"));
+        System.out.println("Estado: " + getEstado());
     }
-
 }
