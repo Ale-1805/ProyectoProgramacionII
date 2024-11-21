@@ -1,5 +1,7 @@
 package ec.edu.uce.Dominio;
 
+import ec.edu.uce.Util.ValidacionItem;
+
 public class Item {
     private int idItem;
     private String producto;
@@ -13,24 +15,52 @@ public class Item {
     public Item() {
     }
 
-    // Constructor completo
+    // Constructor con parámetros
     public Item(int idItem, String producto, int cantidad, double precioUnitario, String estado, String ubicacion) {
-        this.idItem = idItem;
-        this.producto = producto;
-        this.cantidad = cantidad;
-        this.precioUnitario = precioUnitario;
-        this.subtotal = cantidad * precioUnitario; // Calcula subtotal automáticamente
-        this.estado = estado;
-        this.ubicacion = ubicacion;
+        if (ValidacionItem.validarId(idItem)) {
+            this.idItem = idItem;
+        } else {
+            throw new IllegalArgumentException("ID inválido");
+        }
+        if (ValidacionItem.validarNombre(producto)) {
+            this.producto = producto;
+        } else {
+            throw new IllegalArgumentException("Nombre del producto inválido");
+        }
+        if (ValidacionItem.validarCantidad(cantidad)) {
+            this.cantidad = cantidad;
+        } else {
+            throw new IllegalArgumentException("Cantidad inválida");
+        }
+        if (ValidacionItem.validarPrecio(precioUnitario)) {
+            this.precioUnitario = precioUnitario;
+        } else {
+            throw new IllegalArgumentException("Precio inválido");
+        }
+        if (ValidacionItem.validarEstado(estado)) {
+            this.estado = estado;
+        } else {
+            throw new IllegalArgumentException("Estado inválido");
+        }
+        if (ValidacionItem.validarUbicacion(ubicacion)) {
+            this.ubicacion = ubicacion;
+        } else {
+            throw new IllegalArgumentException("Ubicación inválida");
+        }
+        calcularSubtotal(); // Calcula el subtotal
     }
 
-    // Getters y Setters
+    // Getters y Setters con validaciones
     public int getIdItem() {
         return idItem;
     }
 
     public void setIdItem(int idItem) {
-        this.idItem = idItem;
+        if (ValidacionItem.validarId(idItem)) {
+            this.idItem = idItem;
+        } else {
+            System.out.println("ID inválido. No se realizó el cambio.");
+        }
     }
 
     public String getProducto() {
@@ -38,7 +68,11 @@ public class Item {
     }
 
     public void setProducto(String producto) {
-        this.producto = producto;
+        if (ValidacionItem.validarNombre(producto)) {
+            this.producto = producto;
+        } else {
+            System.out.println("Nombre del producto inválido. No se realizó el cambio.");
+        }
     }
 
     public int getCantidad() {
@@ -46,8 +80,12 @@ public class Item {
     }
 
     public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
-        calcularSubtotal(); // Recalcula subtotal al cambiar cantidad
+        if (ValidacionItem.validarCantidad(cantidad)) {
+            this.cantidad = cantidad;
+            calcularSubtotal(); // Recalcula subtotal al cambiar cantidad
+        } else {
+            System.out.println("Cantidad inválida. No se realizó el cambio.");
+        }
     }
 
     public double getPrecioUnitario() {
@@ -55,8 +93,12 @@ public class Item {
     }
 
     public void setPrecioUnitario(double precioUnitario) {
-        this.precioUnitario = precioUnitario;
-        calcularSubtotal(); // Recalcula subtotal al cambiar precio
+        if (ValidacionItem.validarPrecio(precioUnitario)) {
+            this.precioUnitario = precioUnitario;
+            calcularSubtotal(); // Recalcula subtotal al cambiar precio
+        } else {
+            System.out.println("Precio inválido. No se realizó el cambio.");
+        }
     }
 
     public double getSubtotal() {
@@ -68,7 +110,11 @@ public class Item {
     }
 
     public void setEstado(String estado) {
-        this.estado = estado;
+        if (ValidacionItem.validarEstado(estado)) {
+            this.estado = estado;
+        } else {
+            System.out.println("Estado inválido. No se realizó el cambio.");
+        }
     }
 
     public String getUbicacion() {
@@ -76,7 +122,11 @@ public class Item {
     }
 
     public void setUbicacion(String ubicacion) {
-        this.ubicacion = ubicacion;
+        if (ValidacionItem.validarUbicacion(ubicacion)) {
+            this.ubicacion = ubicacion;
+        } else {
+            System.out.println("Ubicación inválida. No se realizó el cambio.");
+        }
     }
 
     // Métodos adicionales

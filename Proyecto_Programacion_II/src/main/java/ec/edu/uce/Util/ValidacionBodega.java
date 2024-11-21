@@ -1,23 +1,34 @@
 package ec.edu.uce.Util;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ValidacionBodega {
+    // Validar Nombre: solo letras y espacios
     public static boolean validarNombre(String nombre) {
-        return nombre.matches("[a-zA-Z\\s]+");
+        if (nombre == null) return false;
+        Matcher matcher = Pattern.compile("^[a-zA-Z\\s]+$").matcher(nombre);
+        return matcher.matches();
     }
 
-    // Validación para la ubicación: letras, números, guiones, espacios y comas
+    // Validar Ubicación: letras, números, guiones y espacios
     public static boolean validarUbicacion(String ubicacion) {
-        return ubicacion.matches("[a-zA-Z0-9\\-,\\s]+");
+        if (ubicacion == null) return false;
+        Matcher matcher = Pattern.compile("^[a-zA-Z0-9\\-\\s]+$").matcher(ubicacion);
+        return matcher.matches();
     }
 
-    // Validación para productos: solo letras
+    // Validar Productos: solo letras y espacios
     public static boolean validarProductos(String productos) {
-        return productos.matches("[a-zA-Z\\-,\\s]+");
+        if (productos == null) return false;
+        Matcher matcher = Pattern.compile("^[a-zA-Z\\s]+$").matcher(productos);
+        return matcher.matches();
     }
 
-    // Validación para usuarios: letras y números
+    // Validar Usuarios: solo letras y números
     public static boolean validarUsuarios(String usuarios) {
-        return usuarios.matches("[a-zA-Z0-9\\-,\\s]+");
+        if (usuarios == null) return false;
+        Matcher matcher = Pattern.compile("^[a-zA-Z0-9]+$").matcher(usuarios);
+        return matcher.matches();
     }
 }

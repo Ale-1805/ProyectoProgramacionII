@@ -1,5 +1,7 @@
 package ec.edu.uce.Dominio;
 
+import ec.edu.uce.Util.ValidacionPedido;
+
 import java.time.LocalDate;
 
 public class Pedido {
@@ -24,7 +26,7 @@ public class Pedido {
     //SET y GET
 
     public void setId(String id) {
-        if (id != null && !id.trim().isEmpty()) {
+        if (ValidacionPedido.validarId(id)) {
             this.id = id;
         } else
             System.out.println("El ID no puede ser nulo o vacío.");
@@ -35,7 +37,7 @@ public class Pedido {
     }
 
     public void setFecha(LocalDate fecha) {
-        if (fecha != null) {
+        if (ValidacionPedido.validarFecha(fecha)) {
             this.fecha = fecha;
         } else
             System.out.println("La fecha no puede ser nula.");
@@ -46,7 +48,7 @@ public class Pedido {
     }
 
     public void setEstado(String estado) {
-        if (estado != null && (estado.equalsIgnoreCase("Entregado") || estado.equalsIgnoreCase("En Camino"))) {
+        if (ValidacionPedido.validarEstado(estado)) {
             this.estado = estado;
         } else
             System.out.println("El estado debe ser 'Entregado' o 'En Camino'");
@@ -57,7 +59,7 @@ public class Pedido {
     }
 
     public void setItemPedido(String itemPedido) {
-        if (itemPedido != null && !itemPedido.trim().isEmpty()) {
+        if (ValidacionPedido.validarItemPedido(itemPedido)) {
             this.itemPedido = itemPedido;
         } else
             System.out.println("El item del pedido no puede ser nulo.");
@@ -66,4 +68,5 @@ public class Pedido {
     public String getItemPedido() {
         return itemPedido;
     }
+
 }

@@ -1,79 +1,103 @@
 package ec.edu.uce.Dominio;
+
 import ec.edu.uce.Util.ValidacionBodega;
+
 public class Bodega {
-    //Atributos
+    // Atributos
     private String nombre;
     private String ubicacion;
     private String productos;
     private String usuarios;
-    //Constructor
-    public Bodega (String nNombre, String nUbicacion, String  nProductos, String nUsuarios){
-        nombre = nNombre;
-        ubicacion = nUbicacion;
-        productos = nProductos;
-        usuarios = nUsuarios;
+    //Constructor sin parametros
+    public Bodega(){
+        this.nombre="S/N";
+        this.ubicacion="S/N";
+        this.productos="S/N";
+        this.usuarios="S/N";
     }
 
-    public Bodega (){
-        nombre = "";
-        ubicacion = "";
-        productos = "";
-        usuarios = "";
-    }
-    //Setters y getters
-    public void setNombre(String nNombre) {
-        if(ValidacionBodega.validarNombre(nNombre)) {
-            nombre = nNombre;
-        }else{
-            System.out.println("Error: Nombre mal ingresado");
-        }
+// Constructor
+public Bodega(String nNombre, String nUbicacion, String nProductos, String nUsuarios) {
+    if (ValidacionBodega.validarNombre(nNombre)) {
+        this.nombre = nNombre;
+    } else {
+        System.out.println("Nombre inválido. Debe contener solo letras y espacios.");
     }
 
-    public String getNombre() {
-        return nombre;
+    if (ValidacionBodega.validarUbicacion(nUbicacion)) {
+        this.ubicacion = nUbicacion;
+    } else {
+        System.out.println("Ubicación inválida. Debe contener solo letras, números, guiones y espacios.");
     }
 
-    public void setProductos(String nProductos) {
-        if(ValidacionBodega.validarProductos(nProductos)) {
-            productos = nProductos;
-        }else{
-            System.out.println("Error: Productos mal ingresados");
-        }
+    if (ValidacionBodega.validarProductos(nProductos)) {
+        this.productos = nProductos;
+    } else {
+        System.out.println("Productos inválidos. Deben contener solo letras y espacios.");
     }
 
-    public String getProductos() {
-        return productos;
-    }
-
-    public void setUbicacion(String nUbicacion) {
-        if(ValidacionBodega.validarUbicacion(nUbicacion)) {
-            ubicacion = nUbicacion;
-        }else {
-            System.out.println("Error: Ubicacion mal ingresada");
-        }
-    }
-
-    public String getUbicacion() {
-        return ubicacion;
-    }
-
-    public void setUsuarios(String nUsuarios) {
-        if(ValidacionBodega.validarUsuarios(nUsuarios)) {
-            usuarios = nUsuarios;
-        }else {
-            System.out.println("Error: Usuarios mal ingresados");
-        }
-    }
-
-    public String getUsuarios() {
-        return usuarios;
-    }
-    public String mostrarBodega() {
-        return "Producto{" +
-                ", Nombre= '" + getNombre() + '\'' +
-                ", Ubicacion= " + getUbicacion() +
-                ", Productos= " + getProductos() +
-                ", Usuarios= "+ getUsuarios() +
-                '}';
+    if (ValidacionBodega.validarUsuarios(nUsuarios)) {
+        this.usuarios = nUsuarios;
+    } else {
+        System.out.println("Usuarios inválidos. Deben contener solo letras y números.");
     }
 }
+
+// Getters y Setters
+public void setNombre(String nNombre) {
+    if (ValidacionBodega.validarNombre(nNombre)) {
+        this.nombre = nNombre;
+    } else {
+        System.out.println("Nombre inválido. Debe contener solo letras y espacios.");
+    }
+}
+
+public String getNombre() {
+    return nombre;
+}
+
+public void setProductos(String nProductos) {
+    if (ValidacionBodega.validarProductos(nProductos)) {
+        this.productos = nProductos;
+    } else {
+        System.out.println("Productos inválidos. Deben contener solo letras y espacios.");
+    }
+}
+
+public String getProductos() {
+    return productos;
+}
+
+public void setUbicacion(String nUbicacion) {
+    if (ValidacionBodega.validarUbicacion(nUbicacion)) {
+        this.ubicacion = nUbicacion;
+    } else {
+        System.out.println("Ubicación inválida. Debe contener solo letras, números, guiones y espacios.");
+    }
+}
+
+public String getUbicacion() {
+    return ubicacion;
+}
+
+public void setUsuarios(String nUsuarios) {
+    if (ValidacionBodega.validarUsuarios(nUsuarios)) {
+        this.usuarios = nUsuarios;
+    } else {
+        System.out.println("Usuarios inválidos. Deben contener solo letras y números.");
+    }
+}
+
+public String getUsuarios() {
+    return usuarios;
+    }
+    // Metodo mostrar()
+    public void mostrar() {
+        System.out.println("Información de la Bodega:");
+        System.out.println("Nombre: " + getNombre());
+        System.out.println("Ubicación: " + getUbicacion());
+        System.out.println("Productos: " + getProductos());
+        System.out.println("Usuarios: " + getUsuarios());
+    }
+}
+

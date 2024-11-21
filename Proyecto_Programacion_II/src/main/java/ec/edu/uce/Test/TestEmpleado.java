@@ -5,7 +5,6 @@ import java.util.Date;
 
 public class TestEmpleado {
     public static void main(String[] args) {
-
         Object empleado = new Empleado();
         pruebaconstructor();
         pruebaconstructor1("Juan Perez", new Date(115, 5, 15), new Date(119, 5, 15), "Activo");
@@ -55,6 +54,7 @@ public class TestEmpleado {
         empleado.setEstado(estado);
         System.out.println("Estado Set: " + empleado.getEstado());
     }
+
 }
 
 

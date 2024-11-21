@@ -20,5 +20,6 @@ public class SubMenu_4 {
             default:
                 System.out.println("Opción inválida.");
         }
+
     }
 }

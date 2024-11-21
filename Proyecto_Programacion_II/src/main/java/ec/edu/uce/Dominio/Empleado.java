@@ -1,5 +1,5 @@
 package ec.edu.uce.Dominio;
-
+import ec.edu.uce.Util.ValidacionEmpleado;
 import java.util.Date;
 
 public class Empleado {
@@ -24,7 +24,7 @@ public class Empleado {
     //SET y GET
 
     public void setNombre(String nombre) {
-        if (nombre != null && !nombre.trim().isEmpty() && nombre.length() >= 3 && nombre.length() <= 50) {
+        if (ValidacionEmpleado.validarNombre(nombre) && !nombre.trim().isEmpty() && nombre.length() >= 3 && nombre.length() <= 50) {
             this.nombre = nombre;
         } else
             System.out.println("El nombre debe tener entre 3 y 50 caracteres y no puede estar vacío.");
@@ -35,7 +35,7 @@ public class Empleado {
     }
 
     public void setFechaIngreso(Date fechaIngreso) {
-        if (fechaIngreso != null && fechaIngreso.before(new Date())) {
+        if (ValidacionEmpleado.validarFechaIngreso(fechaIngreso)) {
             this.fechaIngreso = fechaIngreso;
         } else
             System.out.println("La fecha de ingreso debe ser anterior o igual a la fecha actual.");
@@ -46,7 +46,7 @@ public class Empleado {
     }
 
     public void setFechaSalida(Date fechaSalida) {
-        if (fechaSalida == null || (fechaIngreso != null && fechaSalida.after(fechaIngreso))) {
+        if (ValidacionEmpleado.validarFechaSalida(fechaSalida, fechaIngreso)) {
             this.fechaSalida = fechaSalida;
         } else
             System.out.println("La fecha de salida debe ser posterior a la fecha de ingreso.");
@@ -57,7 +57,7 @@ public class Empleado {
     }
 
     public void setEstado(String estado) {
-        if (estado != null && (estado.equalsIgnoreCase("Activo") || estado.equalsIgnoreCase("Inactivo"))) {
+        if (ValidacionEmpleado.validarEstado(estado)) {
             this.estado = estado;
         } else
             System.out.println("El estado debe ser 'Activo' o 'Inactivo'");
