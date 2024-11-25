@@ -8,7 +8,7 @@ public class TestPedido {
         Object pedido = new Pedido();
         pruebaconstructor();
         pruebaconstructor1("123", LocalDate.of(2000, 01, 01), "Entregado", "Jabon");
-        pruebaSetId("123");
+        pruebaSetId(123);
         pruebaSetFecha(LocalDate.of(2024, 11, 19));
         pruebaSetEstado("En Camino");
         pruebaSetItemPedido("Shampoo");
@@ -27,7 +27,7 @@ public class TestPedido {
     }
 
     //setId
-    public static void pruebaSetId(String id) {
+    public static void pruebaSetId(int id) {
         Pedido pedido = new Pedido();
         pedido.setId(id);
         System.out.println("ID Set: " + pedido.getId());

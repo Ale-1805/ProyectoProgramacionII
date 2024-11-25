@@ -1,5 +1,5 @@
 package ec.edu.uce.Dominio;
-import ec.edu.uce.Util.ValidacionDevolucion;
+import ec.edu.uce.Util.Validaciones;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -56,7 +56,7 @@ public class Devolucion {
     }
 
     public boolean setSucursal(String sucursal) {
-        if (ValidacionDevolucion.validarSucursal(sucursal)) {
+        if (Validaciones.validarUbicacion(sucursal)) {
             this.sucursal = sucursal;
             return true;
         }
@@ -91,7 +91,7 @@ public class Devolucion {
     }
 
     public boolean setEstado(String estado) {
-        if (ValidacionDevolucion.validarEstado(estado)) {
+        if (Validaciones.validarEstadoPedido(estado)) {
             this.estado = estado;
             return true;
         }

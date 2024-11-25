@@ -1,6 +1,6 @@
 package ec.edu.uce.Dominio;
 
-import ec.edu.uce.Util.ValidacionBodega;
+import ec.edu.uce.Util.Validaciones;
 
 public class Bodega {
     // Atributos
@@ -18,25 +18,25 @@ public class Bodega {
 
 // Constructor
 public Bodega(String nNombre, String nUbicacion, String nProductos, String nUsuarios) {
-    if (ValidacionBodega.validarNombre(nNombre)) {
+    if (Validaciones.validarNombre(nNombre)) {
         this.nombre = nNombre;
     } else {
         System.out.println("Nombre inválido. Debe contener solo letras y espacios.");
     }
 
-    if (ValidacionBodega.validarUbicacion(nUbicacion)) {
+    if (Validaciones.validarUbicacion(nUbicacion)) {
         this.ubicacion = nUbicacion;
     } else {
         System.out.println("Ubicación inválida. Debe contener solo letras, números, guiones y espacios.");
     }
 
-    if (ValidacionBodega.validarProductos(nProductos)) {
+    if (Validaciones.validarProducto(nProductos)) {
         this.productos = nProductos;
     } else {
         System.out.println("Productos inválidos. Deben contener solo letras y espacios.");
     }
 
-    if (ValidacionBodega.validarUsuarios(nUsuarios)) {
+    if (Validaciones.validarUsuario(nUsuarios)) {
         this.usuarios = nUsuarios;
     } else {
         System.out.println("Usuarios inválidos. Deben contener solo letras y números.");
@@ -45,7 +45,7 @@ public Bodega(String nNombre, String nUbicacion, String nProductos, String nUsua
 
 // Getters y Setters
 public void setNombre(String nNombre) {
-    if (ValidacionBodega.validarNombre(nNombre)) {
+    if (Validaciones.validarNombre(nNombre)) {
         this.nombre = nNombre;
     } else {
         System.out.println("Nombre inválido. Debe contener solo letras y espacios.");
@@ -57,7 +57,7 @@ public String getNombre() {
 }
 
 public void setProductos(String nProductos) {
-    if (ValidacionBodega.validarProductos(nProductos)) {
+    if (Validaciones.validarProducto(nProductos)) {
         this.productos = nProductos;
     } else {
         System.out.println("Productos inválidos. Deben contener solo letras y espacios.");
@@ -69,7 +69,7 @@ public String getProductos() {
 }
 
 public void setUbicacion(String nUbicacion) {
-    if (ValidacionBodega.validarUbicacion(nUbicacion)) {
+    if (Validaciones.validarUbicacion(nUbicacion)) {
         this.ubicacion = nUbicacion;
     } else {
         System.out.println("Ubicación inválida. Debe contener solo letras, números, guiones y espacios.");
@@ -81,7 +81,7 @@ public String getUbicacion() {
 }
 
 public void setUsuarios(String nUsuarios) {
-    if (ValidacionBodega.validarUsuarios(nUsuarios)) {
+    if (Validaciones.validarUsuario(nUsuarios)) {
         this.usuarios = nUsuarios;
     } else {
         System.out.println("Usuarios inválidos. Deben contener solo letras y números.");

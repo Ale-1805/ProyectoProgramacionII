@@ -22,7 +22,6 @@ public class TestItemDevolucion {
             item2.setRazonDevolucion("Error en la entrega");
             item2.setEstado("Aprobado");
             item2.setFechaDevolucion(new Date());
-            item2.setObservaciones("Ninguna");
             System.out.println("Producto configurado correctamente: " + item2.getProducto());
         } catch (IllegalArgumentException e) {
             System.out.println("Error: " + e.getMessage());

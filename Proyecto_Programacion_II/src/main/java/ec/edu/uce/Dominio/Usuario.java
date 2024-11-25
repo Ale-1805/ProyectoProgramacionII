@@ -1,12 +1,12 @@
 package ec.edu.uce.Dominio;
 
-import ec.edu.uce.Util.ValidacionUsuario;
+import ec.edu.uce.Util.Validaciones;
 
 import java.util.Scanner;
 
 public class Usuario {
     // Atributos
-    private String id;
+    private String usuario;
     private String password;
 
     // Constructor
@@ -16,8 +16,8 @@ public class Usuario {
 
         // Solicitar ID al usuario
         System.out.print("Ingrese el ID del usuario: ");
-        String idInput = scanner.nextLine();
-        setId(idInput);  // Llamar al setter para validar y asignar el ID
+        String usuarioInput = scanner.nextLine();
+        setUsuario(usuarioInput);  // Llamar al setter para validar y asignar el ID
 
         // Solicitar Contraseña al usuario
         System.out.print("Ingrese la contraseña: ");
@@ -29,15 +29,15 @@ public class Usuario {
     }
 
     // Getter y Setter para el ID
-    public String getId() {
-        return id;
+    public String getUsuario() {
+        return usuario;
     }
 
-    public void setId(String id) {
-        if (ValidacionUsuario.validarId(id)) {
-            this.id = id;
+    public void setUsuario(String usuario) {
+        if (Validaciones.validarUsuario(usuario)) {
+            this.usuario = usuario;
         } else {
-            this.id = "";
+            this.usuario = "";
             System.out.println("El ID ingresado no es válido.");
         }
     }
@@ -48,7 +48,7 @@ public class Usuario {
     }
 
     public void setPassword(String password) {
-        if (ValidacionUsuario.validarPassword(password)) {
+        if (Validaciones.validarPassword(password)) {
             this.password = password;
         } else {
             this.password = "";
@@ -58,8 +58,8 @@ public class Usuario {
 
     // Metodo para mostrar los datos del usuario
     public void mostrarDatos() {
-        if (!this.id.isEmpty() && !this.password.isEmpty()) {
-            System.out.println("ID del usuario: " + getId());
+        if (!this.usuario.isEmpty() && !this.password.isEmpty()) {
+            System.out.println("ID del usuario: " + getUsuario());
             System.out.println("Contraseña: " + getPassword());
         } else {
             System.out.println("No se pudo registrar el usuario debido a datos inválidos.");

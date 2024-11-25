@@ -1,59 +1,92 @@
 package ec.edu.uce.Consola;
 import java.util.Scanner;
-public class Menu {
-    public void mostrarMenu() {
-        boolean salir = false;
-        do {
-            System.out.println("Menú Principal");
-            System.out.println("1. Recibir pedidos");
-            System.out.println("2. Gestionar pedidos");
-            System.out.println("3. Gestionar productos");
-            System.out.println("4. Suministrar productos");
-            System.out.println("5. Gestionar devoluciones");
-            System.out.println("6. Salir");
 
-            System.out.print("Ingrese una opción: ");
-            Scanner scanner = new Scanner(System.in);
-            int opcion = scanner.nextInt();
+public class Menu {public static void main(String[] args) {
+    Scanner scanner = new Scanner(System.in);
+    SubMenuEmpleado submenu = new SubMenuEmpleado();
+    SubMenuProveedor subMenuProveedorenu = new SubMenuProveedor();
+    SubMenuJefeBodega subMenuJefeBodega = new SubMenuJefeBodega();
+    boolean salir = false;
 
+    while (!salir) {
+        System.out.println("\n===== Menú Principal =====");
+        System.out.println("1. Ingresar al Sistema");
+        System.out.println("2. Salir");
+        System.out.print("Seleccione una opción: ");
+        int opcionPrincipal = scanner.nextInt();
+        scanner.nextLine(); // Limpiar buffer
 
-            switch (opcion) {
+        switch (opcionPrincipal) {
+            case 1:
+                System.out.println("\n=== Opción: Ingresar al Sistema ===");
+                System.out.println("1. Empleado");
+                System.out.println("2. Proveedor");
+                System.out.println("3. Jefe de Bodega");
+                System.out.println("4. Regresar al Menú Principal");
+                System.out.print("Seleccione una opción: ");
+                int opcionIngreso = scanner.nextInt();
+                scanner.nextLine(); // Limpiar buffer
+            switch (opcionIngreso) {
                 case 1:
-                    System.out.println("Bienvenido a la opción de recibir pedidos");
-                    SubMenu_1 menu = new SubMenu_1();
-                    menu.mostrarSubMenu_1();
+                    System.out.println("\n--- Autenticación ---");
+                    System.out.print("Ingrese ID: ");
+                    String id = scanner.nextLine();
+                    System.out.print("Ingrese Contraseña: ");
+                    String password = scanner.nextLine();
+
+                    if (id.equals("Jhon Aucancela") && password.equals("gokussj2")) {
+                        System.out.println("¡Autenticación exitosa! Bienvenido, Jhon Aucancela.");
+                        submenu.mostrarSubmenuEmpleado(); // Llamada al submenú
+                    } else {
+                        System.out.println("Error: Credenciales incorrectas.");
+                    }
                     break;
                 case 2:
-                    System.out.println("Bienvenido a la opción de gestión de pedidos");
-                    SubMenu_2 menu2 = new SubMenu_2();
-                    menu2.mostrarSubMenu_2();
+                        System.out.println("\n--- AUTENTICACION ---");
+                        System.out.print("Ingrese ID: ");
+                        id = scanner.nextLine();
+                        System.out.print("Ingrese Contraseña: ");
+                        password = scanner.nextLine();
+
+                        // Credenciales correctas
+                        if (id.equals("Proveedor ABC") && password.equals("1234")) {
+                            System.out.println("¡Autenticación exitosa! Bienvenido, Proveedor ABC.");
+                            SubMenuProveedor.mostrarSubMenuProveedor(); // Llamada al submenú
+                        } else {
+                            System.out.println("Error: Credenciales incorrectas.");
+                        }
                     break;
                 case 3:
-                    System.out.println("Bienvenido a la opción de Suministrar productos");
-                    SubMenu_3 menu3 = new SubMenu_3();
-                    menu3.mostrarSubMenu_3();
+                    System.out.println("\n--- AUTENTICACION ---");
+                    System.out.print("Ingrese ID: ");
+                    id = scanner.nextLine();
+                    System.out.print("Ingrese Contraseña: ");
+                    password = scanner.nextLine();
+
+                    // Credenciales correctas
+                    if (id.equals("JefeABC") && password.equals("1234")) {
+                        System.out.println("¡Autenticación exitosa! Bienvenido, JefeABC.");
+                        SubMenuJefeBodega.mostrarSubMenuJefeBodega(); // Llamada al submenú
+                    } else {
+                        System.out.println("Error: Credenciales incorrectas.");
+                    }
                     break;
                 case 4:
-                    System.out.println("Bienvenido a la opción de gestion de devoluciones");
-                    SubMenu_4 menu4 = new SubMenu_4();
-                    menu4.mostrarSubMenu_4();
-                    break;
-                case 5:
-                    System.out.println("Bienvenido a la opción de gestion de pedidos");
-                    SubMenu_5 menu5 = new SubMenu_5();
-                    menu5.mostrarSubMenu_5();
-                    break;
-                case 6:
-                    System.out.println("¿Estás seguro que deseas salir? (s/n)");
-                    String confirmacion = scanner.next();
-                    if (confirmacion.equalsIgnoreCase("s")) {
-                        salir = true;
-                        System.out.println("Saliendo del sistema...");
-                    }
+                    System.out.println("Regresando al Menú Principal...");
                     break;
                 default:
                     System.out.println("Opción inválida.");
             }
-        }while (!salir);
+            case 2:
+                System.out.println("¡Gracias por usar el sistema! Saliendo...");
+                salir = true;
+                break;
+
+                 default:
+                 System.out.println("Opción inválida. Intente nuevamente.");
+                }
+        }
     }
 }
+
+

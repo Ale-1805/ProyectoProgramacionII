@@ -1,5 +1,5 @@
 package ec.edu.uce.Dominio;
-import ec.edu.uce.Util.ValidacionProveedor;
+import ec.edu.uce.Util.Validaciones;
 import java.util.Scanner;
 
 public class Proveedor {
@@ -58,7 +58,7 @@ public class Proveedor {
     }
 
     public boolean setId(int id) {
-        if (ValidacionProveedor.validarId(id)) {
+        if (Validaciones.validarId(id)) {
             this.id = id;
             return true;
         }
@@ -71,7 +71,7 @@ public class Proveedor {
     }
 
     public boolean setNombre(String nombre) {
-        if (ValidacionProveedor.validarNombre(nombre)) {
+        if (Validaciones.validarNombre(nombre)) {
             this.nombre = nombre;
             return true;
         }
@@ -84,7 +84,7 @@ public class Proveedor {
     }
 
     public boolean setContacto(String contacto) {
-        if (ValidacionProveedor.validarContacto(contacto)) {
+        if (Validaciones.validarContacto(contacto)) {
             this.contacto = contacto;
             return true;
         }

@@ -1,6 +1,6 @@
 package ec.edu.uce.Dominio;
 
-import ec.edu.uce.Util.ValidacionJefeBodega;
+import ec.edu.uce.Util.Validaciones;
 
 import java.util.Scanner;
 
@@ -8,7 +8,6 @@ public class JefeDeBodega {
     // Atributos
     private String nombre;
     private String fechaIngreso;
-    private String turno;
 
     // Constructor
     public JefeDeBodega() {
@@ -38,18 +37,6 @@ public class JefeDeBodega {
             }
         }
 
-        // Solicitar Turno con validación
-        boolean turnoValido = false;
-        while (!turnoValido) {
-            System.out.print("Ingrese el turno (mañana o noche): ");
-            String turnoInput = scanner.nextLine();
-            if (setTurno(turnoInput)) {  // Llamar al setter para validar y asignar el turno
-                turnoValido = true;
-            } else {
-                System.out.println("El turno ingresado no es válido. Debe ser 'mañana' o 'noche'.");
-            }
-        }
-
         // Mostrar los datos ingresados
         mostrarDatos();
     }
@@ -60,7 +47,7 @@ public class JefeDeBodega {
     }
 
     public boolean setNombre(String nombre) {
-        if (ValidacionJefeBodega.validarNombre(nombre)) {
+        if (Validaciones.validarNombre(nombre)) {
             this.nombre = nombre;
             return true;
         }
@@ -73,32 +60,19 @@ public class JefeDeBodega {
     }
 
     public boolean setFechaIngreso(String fechaIngreso) {
-        if (ValidacionJefeBodega.validarFecha(fechaIngreso)) {
+        if (Validaciones.validarFechaIngreso2(fechaIngreso)) {
             this.fechaIngreso = fechaIngreso;
             return true;
         }
         return false;
     }
 
-    // Getter y Setter para el Turno
-    public String getTurno() {
-        return turno;
-    }
-
-    public boolean setTurno(String turno) {
-        if (ValidacionJefeBodega.validarTurno(turno)) {
-            this.turno = turno;
-            return true;
-        }
-        return false;
-    }
 
     // Metodo para mostrar los datos del jefe de bodega
     public void mostrarDatos() {
-        if (nombre != null && fechaIngreso != null && turno != null) {
+        if (nombre != null && fechaIngreso != null) {
             System.out.println("Nombre del Jefe de Bodega: " + getNombre());
             System.out.println("Fecha de Ingreso: " + getFechaIngreso());
-            System.out.println("Turno: " + getTurno());
         } else {
             System.out.println("No se pudo registrar al jefe de bodega debido a datos inválidos.");
         }
