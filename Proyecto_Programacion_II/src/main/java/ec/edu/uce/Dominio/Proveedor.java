@@ -1,68 +1,32 @@
 package ec.edu.uce.Dominio;
-import ec.edu.uce.Util.Validaciones;
-import java.util.Scanner;
 
 public class Proveedor {
+    //Atributos
     private int id;
     private String nombre;
     private String contacto;
 
     // Constructor
     public Proveedor() {
-        Scanner scanner = new Scanner(System.in);
-
-        // Ingresar y validar el ID
-        boolean idValido = false;
-        while (!idValido) {
-            System.out.print("Ingrese el ID del proveedor: ");
-            int idInput = scanner.nextInt();
-            scanner.nextLine(); // Limpiar el buffer del scanner
-            if (setId(idInput)) {
-                idValido = true;
-            } else {
-                System.out.println("El ID ingresado no es válido.");
-            }
-        }
-
-        // Ingresar y validar el nombre
-        boolean nombreValido = false;
-        while (!nombreValido) {
-            System.out.print("Ingrese el nombre del proveedor: ");
-            String nombreInput = scanner.nextLine();
-            if (setNombre(nombreInput)) {
-                nombreValido = true;
-            } else {
-                System.out.println("El nombre ingresado no es válido.");
-            }
-        }
-
-        // Ingresar y validar el contacto
-        boolean contactoValido = false;
-        while (!contactoValido) {
-            System.out.print("Ingrese el contacto del proveedor (número de teléfono ecuatoriano): ");
-            String contactoInput = scanner.nextLine();
-            if (setContacto(contactoInput)) {
-                contactoValido = true;
-            } else {
-                System.out.println("El contacto ingresado no es válido.");
-            }
-        }
-
-        // Mostrar los datos ingresados
-        mostrarProveedor();
+        // Inicializar con valores vacíos
+        this.id = 1;
+        this.nombre = "S/N";
+        this.contacto = "S/N";
     }
-
+    public Proveedor(int id, String nombre, String contacto){
+        this.id = id;
+        this.nombre = nombre;
+        this.contacto = contacto;
+    }
     // Getter y Setter para ID
     public int getId() {
         return id;
     }
 
-    public boolean setId(int id) {
-        if (Validaciones.validarId(id)) {
+    public void setId(int id) {
+        if (id>=0) {
             this.id = id;
-            return true;
         }
-        return false;
     }
 
     // Getter y Setter para Nombre
@@ -70,12 +34,8 @@ public class Proveedor {
         return nombre;
     }
 
-    public boolean setNombre(String nombre) {
-        if (Validaciones.validarNombre(nombre)) {
+    public void setNombre(String nombre) {
             this.nombre = nombre;
-            return true;
-        }
-        return false;
     }
 
     // Getter y Setter para Contacto
@@ -83,20 +43,17 @@ public class Proveedor {
         return contacto;
     }
 
-    public boolean setContacto(String contacto) {
-        if (Validaciones.validarContacto(contacto)) {
+    public void setContacto(String contacto) {
             this.contacto = contacto;
-            return true;
-        }
-        return false;
     }
 
     // Metodo para mostrar los datos del proveedor
-    public void mostrarProveedor() {
-        System.out.println("Proveedor{" +
+    public String mostrarProveedor() {
+        return "Proveedor{" +
                 "ID=" + getId() +
                 ", Nombre='" + getNombre() + '\'' +
                 ", Contacto='" + getContacto() + '\'' +
-                '}');
+                '}';
     }
+
 }

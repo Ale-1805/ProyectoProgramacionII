@@ -1,6 +1,7 @@
 package ec.edu.uce.Util;
 
-import java.time.LocalDate;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -51,7 +52,7 @@ public class Validaciones {
     public static boolean validarContacto(String contacto) {
         // Validar números de teléfono ecuatorianos (9 dígitos y que empiece con 09 o 02)
         // El número de teléfono debe empezar con 09 (móviles) o 02 (fijos) seguido de 7 dígitos
-        return contacto.matches("^(09|02)\\d{7}$");  // Validación del formato de teléfono
+        return contacto.matches("(0[2-3])\\d{7}|09\\d{8}");  // Validación del formato de teléfono
     }
 
     public static boolean validarFechaIngreso(Date fechaIngreso) {
@@ -83,15 +84,25 @@ public class Validaciones {
                 (estado.equalsIgnoreCase("Pendiente") || estado.equalsIgnoreCase("Aprobado"));
     }
 
-    public static boolean validarFecha(java.util.Date fecha) {
-        return fecha != null;
+    // Validar que la fecha siga el formato dd/MM/yyyy
+    public static boolean validarFecha(String fecha) {
+        if (fecha == null || fecha.isEmpty()) {
+            return false;
+        }
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        formato.setLenient(false);
+        try {
+            formato.parse(fecha);
+            return true;
+        } catch (ParseException e) {
+            return false;
+        }
     }
-    public static boolean validarFechaIngreso2 (String fecha){
+
+    public static boolean validarFechaIngresoString (String fecha){
         return fecha.matches("\\d{2}/\\d{2}/\\d{4}");
     }
-    public static boolean validarFechaLocal(LocalDate fecha) {
-        return fecha != null;
-    }
+
     public static boolean validarItemPedido(String itemPedido) {
         return itemPedido != null && !itemPedido.trim().isEmpty();
     }

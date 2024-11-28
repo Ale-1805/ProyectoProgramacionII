@@ -1,53 +1,67 @@
 package ec.edu.uce.Dominio;
-import ec.edu.uce.Util.Validaciones;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Scanner;
 
 public class Devolucion {
     private String sucursal;
     private String codigoDevolucion;
     private String fecha;
     private String estado;
+    private Producto[] productos; // Relación con Producto
+    private Proveedor[] proveedores; // Relación con Proveedor
+    private ItemDevolucion[] itemDevolver; // Relación con ItemDevolver
+    private Pedido[] pedidos; // Relación con Pedido
 
-    // Constructor
+    // Constructor vacío
     public Devolucion() {
-        Scanner scanner = new Scanner(System.in);
+        this.sucursal = "S/N";
+        this.codigoDevolucion = "S/N";
+        this.fecha = "S/N";
+        this.estado = "S/N";
+    }
 
-        // Solicitar Sucursal
-        boolean sucursalValida = false;
-        while (!sucursalValida) {
-            System.out.print("Ingrese el nombre de la sucursal (Sucursal 1, Sucursal 2, etc.): ");
-            String sucursalInput = scanner.nextLine();
-            if (setSucursal(sucursalInput)) {  // Llamar al setter para validar y asignar la sucursal
-                sucursalValida = true;
-            } else {
-                System.out.println("El nombre de la sucursal no es válido.");
-            }
-        }
+    // Constructor para inicializar todos los atributos, exceptuando los arreglos
+    public Devolucion(String sucursal, String estado, String fecha, String codigoDevolucion) {
+        this.sucursal = sucursal;
+        this.codigoDevolucion = codigoDevolucion; // Corregido: el estado debe ser el código de devolución
+        this.fecha = fecha;
+        this.estado = estado;
+    }
 
-        // Generar y mostrar el Código de Devolución
-        this.codigoDevolucion = generarCodigoDevolucion();
-        System.out.println("El código de devolución generado es: " + this.codigoDevolucion);
+    // Relación con Producto
+    public Producto[] getProductos() {
+        return productos;
+    }
 
-        // Solicitar Estado del Daño
-        boolean estadoValido = false;
-        while (!estadoValido) {
-            System.out.print("Ingrese el estado del daño (leve, medio, total): ");
-            String estadoInput = scanner.nextLine();
-            if (setEstado(estadoInput)) {  // Llamar al setter para validar y asignar el estado
-                estadoValido = true;
-            } else {
-                System.out.println("Estado no válido. Ingrese 'leve', 'medio' o 'total'.");
-            }
-        }
+    public void setProductos(Producto[] productos) {
+        this.productos = productos;
+    }
 
-        // Obtener la fecha actual
-        this.fecha = obtenerFechaActual();
+    // Relación con Proveedor
+    public Proveedor[] getProveedores() {
+        return proveedores;
+    }
 
-        // Mostrar los datos ingresados
-        mostrarDatos();
+    public void setProveedores(Proveedor[] proveedores) {
+        this.proveedores = proveedores;
+    }
+
+    // Relación con ItemDevolver
+    public ItemDevolucion[] getItemDevolver() {
+        return itemDevolver;
+    }
+
+    public void setItemDevolver(ItemDevolucion[] itemDevolver) {
+        this.itemDevolver = itemDevolver;
+    }
+
+    // Relación con Pedido
+    public Pedido[] getPedidos() {
+        return pedidos;
+    }
+
+    public void setPedidos(Pedido[] pedidos) {
+        this.pedidos = pedidos;
     }
 
     // Getter y Setter para Sucursal
@@ -55,22 +69,18 @@ public class Devolucion {
         return sucursal;
     }
 
-    public boolean setSucursal(String sucursal) {
-        if (Validaciones.validarUbicacion(sucursal)) {
-            this.sucursal = sucursal;
-            return true;
-        }
-        return false;
+    public void setSucursal(String sucursal) {
+        this.sucursal = sucursal;
     }
 
-    // Getter para el Código de Devolución (No tiene setter ya que es generado automáticamente)
+    // Getter para el Código de Devolución
     public String getCodigoDevolucion() {
         return codigoDevolucion;
     }
 
     // Generar un código de devolución único
-    private String generarCodigoDevolucion() {
-        return "DEV-" + (int) (Math.random() * 10000);  // Genera un código aleatorio de 4 dígitos
+    public String generarCodigoDevolucion() {
+        return "DEV-" + (int) (Math.random() * 10000); // Código aleatorio de 4 dígitos
     }
 
     // Getter para Fecha
@@ -78,36 +88,30 @@ public class Devolucion {
         return fecha;
     }
 
-    // Obtener la fecha y hora actual
+    // Obtener la fecha actual
     private String obtenerFechaActual() {
         SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Date date = new Date();
         return formatoFecha.format(date);
     }
 
-    // Getter y Setter para el Estado del Daño
+    // Getter y Setter para Estado
     public String getEstado() {
         return estado;
     }
 
-    public boolean setEstado(String estado) {
-        if (Validaciones.validarEstadoPedido(estado)) {
-            this.estado = estado;
-            return true;
-        }
-        return false;
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
-    // Metodo para mostrar los datos de la devolución
-    public void mostrarDatos() {
-        if (sucursal != null && codigoDevolucion != null && fecha != null && estado != null) {
-            System.out.println("Sucursal: " + getSucursal());
-            System.out.println("Código de Devolución: " + getCodigoDevolucion());
-            System.out.println("Fecha de Devolución: " + getFecha());
-            System.out.println("Estado del Daño: " + getEstado());
-        } else {
-            System.out.println("No se pudo registrar la devolución debido a datos inválidos.");
-        }
+    // Metodo toString para mostrar los datos de la devolución
+    @Override
+    public String toString() {
+        return "Devolucion{" +
+                "Sucursal='" + sucursal + '\'' +
+                ", Código de Devolución='" + codigoDevolucion + '\'' +
+                ", Fecha='" + fecha + '\'' +
+                ", Estado='" + estado + '\'' +
+                '}';
     }
-
 }

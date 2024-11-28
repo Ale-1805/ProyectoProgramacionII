@@ -24,7 +24,6 @@ public class TestEmpleado {
     public static void pruebaconstructor1(String nombre, Date fechaIngreso, Date fechaSalida, String estado){
         Empleado empleado = new Empleado(nombre, fechaIngreso, fechaSalida, estado);
         System.out.println("Constructor con parámetros creado.");
-        empleado.DatosEmpleado();
     }
 
     //setNombre

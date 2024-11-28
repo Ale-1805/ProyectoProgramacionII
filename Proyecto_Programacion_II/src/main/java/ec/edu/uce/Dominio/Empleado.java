@@ -1,5 +1,5 @@
 package ec.edu.uce.Dominio;
-import ec.edu.uce.Util.Validaciones;
+
 import java.util.Date;
 
 public class Empleado {
@@ -7,70 +7,95 @@ public class Empleado {
     private Date fechaIngreso;
     private Date fechaSalida;
     private String estado;
+    private Empleado[] empleadosAsociados; // Asociación con otros empleados
+    private int numeroDeEmpleadosAsociados;
 
-    //constructor
-    public Empleado (String nombre, Date fechaIngreso, Date fechaSalida, String estado){
+    // Constructor con parámetros
+    public Empleado(String nombre, Date fechaIngreso, Date fechaSalida, String estado) {
         this.nombre = nombre;
         this.fechaIngreso = fechaIngreso;
         this.fechaSalida = fechaSalida;
         this.estado = estado;
-    }
-    public Empleado (){
-        this.nombre = nombre;
-        this.fechaIngreso = fechaIngreso;
-        this.fechaSalida = fechaSalida;
-        this.estado = estado;
-    }
-    //SET y GET
-
-    public void setNombre(String nombre) {
-        if (Validaciones.validarNombre(nombre) && !nombre.trim().isEmpty() && nombre.length() >= 3 && nombre.length() <= 50) {
-            this.nombre = nombre;
-        } else
-            System.out.println("El nombre debe tener entre 3 y 50 caracteres y no puede estar vacío.");
+        this.empleadosAsociados = new Empleado[5]; // Capacidad predeterminada de 5 empleados
+        this.numeroDeEmpleadosAsociados = 0;
     }
 
+    // Constructor por defecto
+    public Empleado() {
+        this.nombre = "null";
+        this.fechaIngreso = null;
+        this.fechaSalida = null;
+        this.estado = "null";
+        this.empleadosAsociados = new Empleado[5]; // Capacidad predeterminada
+        this.numeroDeEmpleadosAsociados = 0;
+    }
+
+    // Métodos para manejar empleados asociados
+    public boolean agregarEmpleadoAsociado(Empleado empleado) {
+        if (numeroDeEmpleadosAsociados < empleadosAsociados.length) {
+            empleadosAsociados[numeroDeEmpleadosAsociados] = empleado;
+            numeroDeEmpleadosAsociados++;
+            return true;
+        }
+        return false; // No se pudo agregar el empleado, arreglo lleno
+    }
+
+    public String consultarEmpleadosAsociados() {
+        StringBuilder info = new StringBuilder("Empleados asociados:\n");
+        for (int i = 0; i < numeroDeEmpleadosAsociados; i++) {
+            info.append(empleadosAsociados[i].getNombre()).append("\n");
+        }
+        return info.toString();
+    }
+
+    public Empleado buscarEmpleadoAsociado(int posicion) {
+        if (posicion >= 0 && posicion < numeroDeEmpleadosAsociados) {
+            return empleadosAsociados[posicion];
+        }
+        return null; // Posición inválida
+    }
+
+    // Métodos GET y SET existentes
     public String getNombre() {
         return nombre;
     }
 
-    public void setFechaIngreso(Date fechaIngreso) {
-        if (Validaciones.validarFechaIngreso(fechaIngreso)) {
-            this.fechaIngreso = fechaIngreso;
-        } else
-            System.out.println("La fecha de ingreso debe ser anterior o igual a la fecha actual.");
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public Date getFechaIngreso() {
         return fechaIngreso;
     }
 
-    public void setFechaSalida(Date fechaSalida) {
-        if (Validaciones.validarFechaSalida(fechaSalida, fechaIngreso)) {
-            this.fechaSalida = fechaSalida;
-        } else
-            System.out.println("La fecha de salida debe ser posterior a la fecha de ingreso.");
+    public void setFechaIngreso(Date fechaIngreso) {
+        this.fechaIngreso = fechaIngreso;
     }
 
     public Date getFechaSalida() {
         return fechaSalida;
     }
 
-    public void setEstado(String estado) {
-        if (Validaciones.validarEstadoEmpleado(estado)) {
-            this.estado = estado;
-        } else
-            System.out.println("El estado debe ser 'Activo' o 'Inactivo'");
+    public void setFechaSalida(Date fechaSalida) {
+        this.fechaSalida = fechaSalida;
     }
 
     public String getEstado() {
         return estado;
     }
 
-    public void DatosEmpleado(){
-        System.out.println("Nombre: " + getNombre());
-        System.out.println("Fecha de Ingreso: " + (getFechaIngreso() != null ? getFechaIngreso() : "No registrada"));
-        System.out.println("Fecha de Salida: " + (getFechaSalida() != null ? getFechaSalida() : "No registrada"));
-        System.out.println("Estado: " + getEstado());
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    // Metodo para mostrar los datos del empleado
+    public String datosEmpleado() {
+        return "Empleado {" +
+                "\nNombre='" + getNombre() + '\'' +
+                "\nFecha de Ingreso=" + (getFechaIngreso() != null ? getFechaIngreso() : "No registrada") +
+                "\nFecha de Salida=" + (getFechaSalida() != null ? getFechaSalida() : "No registrada") +
+                "\nEstado='" + getEstado() + '\'' +
+                "\nEmpleados Asociados=" + consultarEmpleadosAsociados() +
+                "\n}";
     }
 }

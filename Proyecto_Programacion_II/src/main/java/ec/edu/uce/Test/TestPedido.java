@@ -1,6 +1,7 @@
 package ec.edu.uce.Test;
 
 import ec.edu.uce.Dominio.Pedido;
+
 import java.time.LocalDate;
 
 public class TestPedido {
@@ -8,10 +9,9 @@ public class TestPedido {
         Object pedido = new Pedido();
         pruebaconstructor();
         pruebaconstructor1("123", LocalDate.of(2000, 01, 01), "Entregado", "Jabon");
-        pruebaSetId(123);
+        pruebaSetId("123");
         pruebaSetFecha(LocalDate.of(2024, 11, 19));
         pruebaSetEstado("En Camino");
-        pruebaSetItemPedido("Shampoo");
     }
 
     //contructor por defecto
@@ -27,7 +27,7 @@ public class TestPedido {
     }
 
     //setId
-    public static void pruebaSetId(int id) {
+    public static void pruebaSetId(String id) {
         Pedido pedido = new Pedido();
         pedido.setId(id);
         System.out.println("ID Set: " + pedido.getId());
@@ -45,12 +45,5 @@ public class TestPedido {
         Pedido pedido = new Pedido();
         pedido.setEstado(estado);
         System.out.println("Estado Set: " + pedido.getEstado());
-    }
-
-    //setItemPedido
-    public static void pruebaSetItemPedido(String itemPedido) {
-        Pedido pedido = new Pedido();
-        pedido.setItemPedido(itemPedido);
-        System.out.println("Item Pedido Set: " + pedido.getItemPedido());
     }
 }

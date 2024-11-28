@@ -1,68 +1,40 @@
 package ec.edu.uce.Dominio;
 
-import ec.edu.uce.Util.Validaciones;
-
-import java.util.Scanner;
-
 public class Usuario {
     // Atributos
-    private String usuario;
-    private String password;
+    private String nombre;
+    private String contrasena;
 
     // Constructor
-    public Usuario() {
-        // Solicitar y validar el ID y la contraseña dentro del constructor
-        Scanner scanner = new Scanner(System.in);
-
-        // Solicitar ID al usuario
-        System.out.print("Ingrese el ID del usuario: ");
-        String usuarioInput = scanner.nextLine();
-        setUsuario(usuarioInput);  // Llamar al setter para validar y asignar el ID
-
-        // Solicitar Contraseña al usuario
-        System.out.print("Ingrese la contraseña: ");
-        String passwordInput = scanner.nextLine();
-        setPassword(passwordInput);  // Llamar al setter para validar y asignar la contraseña
-
-        // Mostrar los resultados
-        mostrarDatos();
+    public Usuario(String nombre, String contrasena) {
+        this.nombre = nombre;
+        this.contrasena = contrasena;
     }
 
-    // Getter y Setter para el ID
-    public String getUsuario() {
-        return usuario;
+    // Getters
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setUsuario(String usuario) {
-        if (Validaciones.validarUsuario(usuario)) {
-            this.usuario = usuario;
-        } else {
-            this.usuario = "";
-            System.out.println("El ID ingresado no es válido.");
-        }
+    public String getContrasena() {
+        return contrasena;
     }
 
-    // Getter y Setter para la Contraseña
-    public String getPassword() {
-        return password;
+    // Setters
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public void setPassword(String password) {
-        if (Validaciones.validarPassword(password)) {
-            this.password = password;
-        } else {
-            this.password = "";
-            System.out.println("La contraseña ingresada no es válida.");
-        }
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
     }
 
-    // Metodo para mostrar los datos del usuario
-    public void mostrarDatos() {
-        if (!this.usuario.isEmpty() && !this.password.isEmpty()) {
-            System.out.println("ID del usuario: " + getUsuario());
-            System.out.println("Contraseña: " + getPassword());
-        } else {
-            System.out.println("No se pudo registrar el usuario debido a datos inválidos.");
-        }
+    // Metodo toString para mostrar los datos del usuario
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "Nombre='" + nombre + '\'' +
+                ", Contraseña='" + contrasena + '\'' +
+                '}';
     }
 }

@@ -1,37 +1,39 @@
 package ec.edu.uce.Test;
 
 import ec.edu.uce.Dominio.ItemDevolucion;
+import ec.edu.uce.Util.Validaciones;
 
 import java.util.Date;
 
 public class TestItemDevolucion {
     public static void main(String[] args) {
-        System.out.println("=== PRUEBA DE CONSTRUCTOR ===");
         try {
-            ItemDevolucion item = new ItemDevolucion(1, "Laptop", 2, "Defectuosa", "Pendiente", new Date(), "Requiere revisión");
-            System.out.println("Objeto creado con éxito: " + item.getProducto());
-        } catch (IllegalArgumentException e) {
-            System.out.println("Error: " + e.getMessage());
-        }
+            crearItemDevolucion();
+            System.out.println("Prueba crearItemDevolucion: PASSED");
 
-        System.out.println("\n=== PRUEBA DE SETTERS ===");
-        ItemDevolucion item2 = new ItemDevolucion();
-        try {
-            item2.setProducto("Tablet");
-            item2.setCantidad(3);
-            item2.setRazonDevolucion("Error en la entrega");
-            item2.setEstado("Aprobado");
-            item2.setFechaDevolucion(new Date());
-            System.out.println("Producto configurado correctamente: " + item2.getProducto());
-        } catch (IllegalArgumentException e) {
-            System.out.println("Error: " + e.getMessage());
-        }
+            validarCantidadNegativa();
+            System.out.println("Prueba validarCantidadNegativa: PASSED");
 
-        // Prueba de valores inválidos
+            // Agregar más métodos de prueba aquí...
+        } catch (AssertionError e) {
+            System.err.println("Prueba fallida: " + e.getMessage());
+        }
+    }
+
+    static void crearItemDevolucion() {
+        ItemDevolucion item = new ItemDevolucion(1, "Monitor", 10, "Defecto de fábrica", "Pendiente", new Date(), "Sin observaciones");
+        assert item != null : "El objeto no debe ser nulo";
+        assert "Monitor".equals(item.getProducto()) : "Producto inválido";
+        assert "Pendiente".equals(item.getEstado()) : "Estado de devolución inválido";
+    }
+
+    static void validarCantidadNegativa() {
         try {
-            item2.setProducto("123");
+            if (!Validaciones.validarCantidad(-5)) {
+                throw new IllegalArgumentException("Cantidad inválida");
+            }
         } catch (IllegalArgumentException e) {
-            System.out.println("Error: " + e.getMessage());
+            assert "Cantidad inválida".equals(e.getMessage()) : "Mensaje de excepción incorrecto";
         }
     }
 }

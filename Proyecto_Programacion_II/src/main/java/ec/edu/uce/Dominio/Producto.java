@@ -1,7 +1,5 @@
 package ec.edu.uce.Dominio;
 
-import ec.edu.uce.Util.Validaciones;
-
 public class Producto {
     //Atributos
     private int Id;
@@ -11,47 +9,23 @@ public class Producto {
     //Constructor
     public Producto (){
         this.Id = 0;
-        this.nombre = "";
+        this.nombre = "S/N";
         this.cantidad = 0;
         this.precio = 0.0;
     }
+    //Constructor con parámetros
     public Producto (int NewId, String nNombre, int nC, double nPrecio){
-        if (Validaciones.validarId(NewId)) {
             this.Id = NewId;
-        } else {
-            System.out.println("El ID ingresado no es válido.");
-            this.Id = 0;
-        }
-
-        if (Validaciones.validarNombre(nNombre)) {
             this.nombre = nNombre;
-        } else {
-            System.out.println("El nombre ingresado no es válido.");
-            this.nombre = "";
-        }
-
-        if (Validaciones.validarCantidad(nC)) {
             this.cantidad = nC;
-        } else {
-            System.out.println("La cantidad ingresada no es válida.");
-            this.cantidad = 0;
-        }
-
-        if (Validaciones.validarPrecio(nPrecio)) {
             this.precio = nPrecio;
-        } else {
-            System.out.println("El precio ingresado no es válido.");
-            this.precio = 0.0;
-        }
     }
 
 
     //Getters y Setters
     public void setId(int NewId){
-        if (Id>=0 && Validaciones.validarId(NewId)) {
+        if (Id>=0) {
             Id = NewId;
-        } else {
-            System.out.println("Id no válida");
         }
     }
     public int getId(){
@@ -59,19 +33,18 @@ public class Producto {
     }
 
     public void setNombre(String nNombre) {
-        if(Validaciones.validarNombre(nNombre)) {
+        if(nombre != null) {
             nombre = nNombre;
         }
     }
+
     public String getNombre(){
         return nombre;
     }
 
     public void setCantidad(int nC){
-        if (cantidad >=0 && Validaciones.validarCantidad(nC)) {
+        if (cantidad >=0) {
             cantidad = nC;
-        } else{
-            System.out.println("La cantidad mal ingresada");
         }
     }
     public int getCantidad(){
@@ -79,10 +52,8 @@ public class Producto {
     }
 
     public void setPrecio(double nPrecio){
-        if (precio>=0 && Validaciones.validarPrecio(nPrecio)) {
+        if (precio>=0 ) {
             precio = nPrecio;
-        } else {
-            System.out.println("El precio no puede ser negativo");
         }
     }
     public double getPrecio(){
@@ -108,5 +79,4 @@ public class Producto {
                 ", Estado= "+ getEstado() +
                 '}';
     }
-
 }
