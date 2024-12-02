@@ -1,6 +1,8 @@
 package ec.edu.uce.Consola;
 
 import ec.edu.uce.Dominio.ItemPedido;
+import ec.edu.uce.Dominio.Pedido;
+import ec.edu.uce.Dominio.Producto;
 import ec.edu.uce.Util.Validaciones;
 
 import java.util.InputMismatchException;
@@ -8,8 +10,10 @@ import java.util.Scanner;
 
 public class SubMenu1 {
     public static void mostrarSubMenu1() {
-        Scanner scanner = new Scanner(System.in);
+        Scanner leer = new Scanner(System.in);
         boolean regresar = false;
+        Pedido[] pedidos = new Pedido[100];  // Lista de pedidos
+        int indicePedido = 0;
 
         while (!regresar) {
             System.out.println("-----------------");
@@ -22,97 +26,189 @@ public class SubMenu1 {
             System.out.println("4. Eliminar pedidos");
             System.out.println("5. Recibir pedidos");
             System.out.println("6. Salir");
-            int opcionPedido = scanner.nextInt();
-            scanner.nextLine(); // Consumir salto de línea
+            int opcionPedido = 0;
+            try {
+                opcionPedido = leer.nextInt();
+                if (opcionPedido < 1 ) {
+                    throw new InputMismatchException("Opción fuera de rango");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Error: Entrada no válida. Por favor, ingrese un número entre 1 y 6.");
+                leer.nextLine(); // Limpiar el buffer del scanner
+                continue;
+            }
 
             switch (opcionPedido) {
                 case 1:
-                    ItemPedido[] pedidos = new ItemPedido[100]; // Hasta 100 pedidos
-                    int indicePedido = 0;
-                    // Crear un nuevo objeto de ItemPedido
-                    ItemPedido nuevoPedido = new ItemPedido();
+                    // Crear un nuevo Pedido
+                    Pedido nuevoPedido = new Pedido();
+                    System.out.print("Ingrese ID del pedido: ");
+                    nuevoPedido.setId(leer.nextInt());
 
-                    // Usar los setters para asignar los valores con validaciones
-                    // ID del pedido con validación
-                    int id = -1;
-                    while (id == -1) {
-                        try {
-                            System.out.print("ID del pedido: ");
-                            id = scanner.nextInt();
-                            scanner.nextLine(); // Consumir el salto de línea
-
-                            if (!Validaciones.validarId(id)) {
-                                System.out.println("El ID debe ser un número entero positivo. Inténtalo de nuevo.");
-                                id = -1; // Reintentar si no pasa la validación
-                            } else {
-                                nuevoPedido.setIdItem(id); // Setter con validación aprobada
-                            }
-                        } catch (InputMismatchException e) {
-                            System.out.println("El ID debe ser un número entero. Inténtalo de nuevo.");
-                            scanner.nextLine(); // Limpiar el buffer
+                    // Fecha del pedido
+                    String fecha;
+                    boolean fechaValida = false;
+                    while (!fechaValida) {
+                        System.out.print("Ingrese la fecha del pedido (dd/MM/yyyy): ");
+                        fecha = leer.next();
+                        if (Validaciones.validarFecha(fecha)) {
+                            nuevoPedido.setFecha(fecha); // Establecer la fecha como String
+                            fechaValida = true;
+                        } else {
+                            System.out.println("Error: Formato de fecha incorrecto. Intente nuevamente.");
                         }
                     }
 
-                    // Cantidad con validación
-                    int cantidad = -1;
-                    while (cantidad == -1) {
-                        try {
-                            System.out.print("Cantidad: ");
-                            cantidad = scanner.nextInt();
+                    // Estado del pedido
+                    String estadoPedido;
+                    do {
+                        System.out.print("Ingrese el estado del pedido (Entregado/En Camino): ");
+                        estadoPedido = leer.next();
+                    } while (!Validaciones.validarEstadoPedido(estadoPedido));
+                    nuevoPedido.setEstado(estadoPedido);
 
-                            if (!Validaciones.validarCantidad(cantidad)) {
-                                System.out.println("La cantidad debe ser un número entero positivo. Inténtalo de nuevo.");
-                                cantidad = -1; // Reintentar si no pasa la validación
-                            } else {
-                                nuevoPedido.setCantidad(cantidad); // Setter con validación aprobada
+                    // Agregar proveedores
+                    int numProveedores = 0;
+                    boolean proveedoresValido = false;
+                    while (!proveedoresValido) {
+                        try {
+                            System.out.print("Ingrese el número de proveedores: ");
+                            numProveedores = leer.nextInt();
+                            if (numProveedores <= 0) {
+                                throw new InputMismatchException("Número de proveedores debe ser mayor que 0.");
                             }
+                            proveedoresValido = true; // Número de proveedores válido
                         } catch (InputMismatchException e) {
-                            System.out.println("La cantidad debe ser un número entero. Inténtalo de nuevo.");
-                            scanner.nextLine(); // Limpiar el buffer
+                            System.out.println("Error: " + e.getMessage());
+                            leer.nextLine(); // Limpiar el buffer del scanner
                         }
                     }
 
-                    // Precio Unitario con validación
-                    double precioUnitario = -1;
-                    while (precioUnitario == -1) {
-                        try {
-                            System.out.print("Precio Unitario: ");
-                            precioUnitario = scanner.nextDouble();
+                    for (int i = 0; i < numProveedores; i++) {
+                        System.out.print("Proveedor " + (i + 1) + " - ID: ");
+                        int idProveedor = leer.nextInt();
+                        leer.nextLine();  // Consumir el salto de línea
+                        System.out.print("Proveedor " + (i + 1) + " - Nombre: ");
+                        String nombreProveedor = leer.nextLine();
+                        System.out.print("Proveedor " + (i + 1) + " - Contacto: ");
+                        String contactoProveedor = leer.nextLine();
+                        nuevoPedido.agregarProveedor(idProveedor, nombreProveedor, contactoProveedor);
+                    }
 
-                            if (precioUnitario<0) {
-                                System.out.println("El precio unitario debe ser un número decimal positivo. Inténtalo de nuevo.");
-                                precioUnitario = -1; // Reintentar si no pasa la validación
-                            } else {
-                                nuevoPedido.setPrecioUnitario(precioUnitario); // Setter con validación aprobada
+                    // Agregar ítems de pedido
+                    int numItems = 0;
+                    boolean itemsValido = false;
+                    while (!itemsValido) {
+                        try {
+                            System.out.print("Ingrese el número de ítems de pedido: ");
+                            numItems = leer.nextInt();
+                            if (numItems <= 0) {
+                                throw new InputMismatchException("Número de ítems debe ser mayor que 0.");
                             }
+                            itemsValido = true; // Número de ítems válido
                         } catch (InputMismatchException e) {
-                            System.out.println("El precio unitario debe ser un número decimal. Inténtalo de nuevo.");
-                            scanner.nextLine(); // Limpiar el buffer
+                            System.out.println("Error: " + e.getMessage());
+                            leer.nextLine(); // Limpiar el buffer del scanner
                         }
                     }
 
-                    // Agregar el pedido al arreglo
+                    for (int i = 0; i < numItems; i++) {
+                        System.out.print("Ítem de pedido " + (i + 1) + " - ID: ");
+                        int idItem = leer.nextInt();
+                        System.out.print("Ítem de pedido " + (i + 1) + " - Cantidad: ");
+                        int cantidad = leer.nextInt();
+                        System.out.print("Ítem de pedido " + (i + 1) + " - Precio unitario: ");
+                        double precioUnitario = leer.nextDouble();
+                        leer.nextLine();  // Consumir el salto de línea
+                        ItemPedido nuevoItem = new ItemPedido(idItem, new Producto[0], cantidad, precioUnitario, "Pendiente", nuevoPedido);
+                        nuevoPedido.setItemsPedidos(new ItemPedido[] { nuevoItem });
+                    }
+
+                    // Agregar el pedido a la lista
                     if (indicePedido < pedidos.length) {
                         pedidos[indicePedido++] = nuevoPedido;
                         System.out.println("Pedido registrado exitosamente.");
                     } else {
                         System.out.println("No se pueden registrar más pedidos. Límite alcanzado.");
                     }
-                    scanner.close();
                     break;
 
                 case 2:
-                    System.out.println("Modificar pedido");
+                    // Modificar un pedido
+                    System.out.print("Ingrese el ID del pedido a modificar: ");
+                    int idModificar = leer.nextInt();
+                    Pedido pedidoModificar = null;
+                    for (Pedido pedido : pedidos) {
+                        if (pedido != null && pedido == pedidoModificar) {
+                            pedidoModificar = pedido;
+                            break;
+                        }
+                    }
+                    if (pedidoModificar == null) {
+                        System.out.println("Pedido no encontrado.");
+                        break;
+                    }
+
+                    // Modificar estado del pedido
+                    String nuevoEstado;
+                    do {
+                        System.out.print("Ingrese el nuevo estado del pedido (Entregado/En Camino): ");
+                        nuevoEstado = leer.next();
+                    } while (!Validaciones.validarEstadoPedido(nuevoEstado));
+                    pedidoModificar.setEstado(nuevoEstado);
+                    System.out.println("Estado modificado correctamente.");
                     break;
+
                 case 3:
-                    System.out.println("Consultar pedido");
+                    // Consultar pedidos
+                    System.out.println("Consultando todos los pedidos:");
+                    for (Pedido pedido : pedidos) {
+                        if (pedido != null) {
+                            System.out.println(pedido.datosPedido());
+                        }
+                    }
                     break;
+
                 case 4:
-                    System.out.println("Eliminar pedido");
+                    // Eliminar un pedido
+                    System.out.print("Ingrese el ID del pedido a eliminar: ");
+                    int idEliminar = leer.nextInt();
+                    Pedido pedidoEliminar = null;
+                    for (int i = 0; i < pedidos.length; i++) {
+                        if (pedidos[i] != null && pedidos[i]== pedidoEliminar) {
+                            pedidoEliminar = pedidos[i];
+                            pedidos[i] = null; // Eliminar el pedido
+                            break;
+                        }
+                    }
+                    if (pedidoEliminar != null) {
+                        System.out.println("Pedido eliminado exitosamente.");
+                    } else {
+                        System.out.println("Pedido no encontrado.");
+                    }
                     break;
+
                 case 5:
-                    System.out.println("Recibir pedidos");
+                    // Recibir pedido (Cambio de estado a "Entregado")
+                    System.out.print("Ingrese el ID del pedido recibido: ");
+                    int idRecibido = leer.nextInt();
+                    Pedido pedidoRecibido = null;
+                    for (Pedido pedido : pedidos) {
+                        if (pedido != null && pedido.getId()==idRecibido) {
+                            pedidoRecibido = pedido;
+                            break;
+                        }
+                    }
+                    if (pedidoRecibido != null) {
+                        pedidoRecibido.setEstado("Entregado");
+                        System.out.println("Pedido recibido correctamente.");
+                    } else {
+                        System.out.println("Pedido no encontrado.");
+                    }
+                    break;
+
                 case 6:
+                    // Salir del menú
                     System.out.println("Saliendo del menú...");
                     regresar = true;
                     break;

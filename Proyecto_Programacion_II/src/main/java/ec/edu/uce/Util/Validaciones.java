@@ -2,7 +2,6 @@ package ec.edu.uce.Util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -22,7 +21,8 @@ public class Validaciones {
 
     // Validar que el ID sea un número entero positivo
     public static boolean validarId(int id) {
-        return id > 0 && String.valueOf(id).matches("\\d+");
+        String idString = String.valueOf(id); // Convertir el ID a cadena
+        return idString.matches("\\d{1,6}"); // Verificar que tiene entre 1 y 6 dígitos
     }
 
     public static boolean validarEstadoPedido(String estado) {
@@ -53,14 +53,6 @@ public class Validaciones {
         // Validar números de teléfono ecuatorianos (9 dígitos y que empiece con 09 o 02)
         // El número de teléfono debe empezar con 09 (móviles) o 02 (fijos) seguido de 7 dígitos
         return contacto.matches("(0[2-3])\\d{7}|09\\d{8}");  // Validación del formato de teléfono
-    }
-
-    public static boolean validarFechaIngreso(Date fechaIngreso) {
-        return fechaIngreso != null && fechaIngreso.before(new Date());
-    }
-
-    public static boolean validarFechaSalida(Date fechaSalida, Date fechaIngreso) {
-        return fechaSalida == null || (fechaIngreso != null && fechaSalida.after(fechaIngreso));
     }
 
     public static boolean validarRazonDevolucion(String razonDevolucion) {
@@ -97,10 +89,6 @@ public class Validaciones {
         } catch (ParseException e) {
             return false;
         }
-    }
-
-    public static boolean validarFechaIngresoString (String fecha){
-        return fecha.matches("\\d{2}/\\d{2}/\\d{4}");
     }
 
     public static boolean validarItemPedido(String itemPedido) {

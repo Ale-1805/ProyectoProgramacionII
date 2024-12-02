@@ -1,91 +1,47 @@
 package ec.edu.uce.Test;
 
 import ec.edu.uce.Dominio.ItemPedido;
-import ec.edu.uce.Util.Validaciones;
+import ec.edu.uce.Dominio.Producto;
+import ec.edu.uce.Dominio.Pedido;
 
 public class TestItemPedido {
+    private static ItemPedido itemPedido;
+
     public static void main(String[] args) {
-        try {
-            crearItemPedido();
-            System.out.println("Prueba crearItemPedido: PASSED");
+        // Inicialización de la clase Pedido (por simplicidad, solo establecemos un ID)
+        Pedido pedido = new Pedido();
 
-            validarCantidadNegativa();
-            System.out.println("Prueba validarCantidadNegativa: PASSED");
+        // Crear productos
+        Producto producto1 = new Producto(1, "Producto A", 10, 100.0);
+        Producto producto2 = new Producto(2, "Producto B", 5, 150.0);
+        Producto productoEditado = new Producto(2, "Producto B Editado", 8, 170.0);
 
-            validarPrecioInvalido();
-            System.out.println("Prueba validarPrecioInvalido: PASSED");
+        // Inicializar el ItemPedido con los productos y parámetros relevantes
+        itemPedido = new ItemPedido(1, new Producto[]{producto1, producto2}, 5, 120.0, "En proceso", pedido);
 
-            actualizarCantidad();
-            System.out.println("Prueba actualizarCantidad: PASSED");
+        // Consultar los productos iniciales
+        System.out.println("Productos iniciales:");
+        System.out.println(itemPedido.consultarProductos());
 
-            actualizarEstado();
-            System.out.println("Prueba actualizarEstado: PASSED");
+        // 1. Probar agregar un producto
+        itemPedido.agregarProducto(new Producto(3, "Producto C", 15, 200.0));
+        System.out.println("\nProductos después de agregar uno nuevo:");
+        System.out.println(itemPedido.consultarProductos());
 
-            validarProductoVacio();
-            System.out.println("Prueba validarProductoVacio: PASSED");
-
-            compararItems();
-            System.out.println("Prueba compararItems: PASSED");
-
-        } catch (AssertionError e) {
-            System.err.println("Prueba fallida: " + e.getMessage());
+        // 2. Probar editar un producto
+        boolean resp = itemPedido.editarProducto(1, productoEditado);
+        if (!resp) {
+            System.out.println("Error al modificar producto.");
         }
+        System.out.println("\nProductos después de editar el segundo producto:");
+        System.out.println(itemPedido.consultarProductos());
+
+        // 3. Consultar el estado del ItemPedido
+        System.out.println("\nEstado del ItemPedido:");
+        System.out.println(itemPedido.getEstado());
+
+        // 4. Probar el metodo toString del ItemPedido
+        System.out.println("\nInformación del ItemPedido:");
+        System.out.println(itemPedido.toString());
     }
-
-    static void crearItemPedido() {
-            ItemPedido item = new ItemPedido(1, 5, "Laptop", 1200.99, "Disponible");
-            assert item != null : "El objeto no debe ser nulo";
-            assert "Laptop".equals(item.getProducto()) : "El producto no coincide";
-            assert 1200.99 == item.getPrecioUnitario() : "El precio no coincide";
-        }
-
-        static void validarCantidadNegativa(){
-            try {
-                if (!Validaciones.validarCantidad(-5)) {
-                    throw new IllegalArgumentException("Cantidad inválida");
-                }
-            } catch (IllegalArgumentException e) {
-                assert "Cantidad inválida".equals(e.getMessage()) : "Mensaje de excepción incorrecto";
-            }
-        }
-
-        static void validarPrecioInvalido() {
-            try {
-                if (!Validaciones.validarPrecio(-1.0)) {
-                    throw new IllegalArgumentException("Precio inválido");
-                }
-            } catch (IllegalArgumentException e) {
-                assert "Precio inválido".equals(e.getMessage()) : "Mensaje de excepción incorrecto";
-            }
-        }
-
-        static void actualizarCantidad() {
-            ItemPedido item = new ItemPedido(1, 5, "Laptop", 1200.99, "Disponible");
-            item.actualizarCantidad(10);
-            assert 10 == item.getCantidad() : "La cantidad no se actualizó correctamente";
-        }
-
-        static void actualizarEstado() {
-            ItemPedido item = new ItemPedido(1, 5, "Laptop", 1200.99, "Disponible");
-            item.actualizarEstado("En tránsito");
-            assert "En tránsito".equals(item.getEstado()) : "El estado no se actualizó correctamente";
-        }
-
-        static void validarProductoVacio() {
-            try {
-                if (!Validaciones.validarProducto("")) {
-                    throw new IllegalArgumentException("Producto inválido");
-                }
-            } catch (IllegalArgumentException e) {
-                assert "Producto inválido".equals(e.getMessage()) : "Mensaje de excepción incorrecto";
-            }
-        }
-
-        static void compararItems() {
-            ItemPedido item1 = new ItemPedido(1, 5, "Laptop", 1200.99, "Disponible");
-            ItemPedido item2 = new ItemPedido(1, 10, "Laptop", 1200.99, "Disponible");
-            assert item1.equals(item2) : "Los objetos deberían ser iguales";
-        }
-
-    }
-
+}

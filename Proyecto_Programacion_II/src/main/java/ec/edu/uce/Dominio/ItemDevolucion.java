@@ -1,39 +1,34 @@
 package ec.edu.uce.Dominio;
 
-import ec.edu.uce.Util.Validaciones;
-
-import java.util.Date;
-
 public class ItemDevolucion {
     private int idItemDevolucion;
-    private Producto producto;
-    private int cantidad;
+    private Producto producto; // Relación con un solo Producto
+    private int cantidadDevuelta;
     private String razonDevolucion;
-    private String estado;
-    private Date fechaDevolucion;
-    private String observaciones;
+    private Devolucion[] devoluciones; // Relación con múltiples devoluciones
+    private int numeroDeDevoluciones;
 
     // Constructor vacío
     public ItemDevolucion() {
         this.idItemDevolucion = 0;
-        this.cantidad = 0;
-        this.razonDevolucion = "S/N";
-        this.estado = "S/N";
-        this.fechaDevolucion = null;
-        this.observaciones = "S/N";
+        this.producto = null;
+        this.cantidadDevuelta = 0;
+        this.razonDevolucion = "Sin razón";
+        this.devoluciones = new Devolucion[0];
+        this.numeroDeDevoluciones = 0;
     }
 
-    // Constructor completo con validaciones
-    public ItemDevolucion(int idItemDevolucion, String producto, int cantidad, String razonDevolucion,
-                          String estado, Date fechaDevolucion, String observaciones) {
-            this.idItemDevolucion = idItemDevolucion;
-            this.cantidad = cantidad;
-            this.razonDevolucion = razonDevolucion;
-            this.estado = estado;
-            this.fechaDevolucion = fechaDevolucion;
+    // Constructor con parámetros
+    public ItemDevolucion(int idItemDevolucion, Producto producto, int cantidadDevuelta, String razonDevolucion) {
+        this.idItemDevolucion = idItemDevolucion;
+        this.producto = producto;
+        this.cantidadDevuelta = cantidadDevuelta;
+        this.razonDevolucion = razonDevolucion;
+        this.devoluciones = new Devolucion[0];
+        this.numeroDeDevoluciones = 0;
     }
 
-    // Getters y Setters
+    // Getter y Setter para idItemDevolucion
     public int getIdItemDevolucion() {
         return idItemDevolucion;
     }
@@ -42,14 +37,7 @@ public class ItemDevolucion {
         this.idItemDevolucion = idItemDevolucion;
     }
 
-    public int getCantidad() {
-        return cantidad;
-    }
-
-    public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
-    }
-
+    // Getter y Setter para producto
     public Producto getProducto() {
         return producto;
     }
@@ -58,6 +46,16 @@ public class ItemDevolucion {
         this.producto = producto;
     }
 
+    // Getter y Setter para cantidadDevuelta
+    public int getCantidadDevuelta() {
+        return cantidadDevuelta;
+    }
+
+    public void setCantidadDevuelta(int cantidadDevuelta) {
+        this.cantidadDevuelta = cantidadDevuelta;
+    }
+
+    // Getter y Setter para razonDevolucion
     public String getRazonDevolucion() {
         return razonDevolucion;
     }
@@ -66,48 +64,61 @@ public class ItemDevolucion {
         this.razonDevolucion = razonDevolucion;
     }
 
-    public String getEstado() {
-        return estado;
+    // Getter para devoluciones
+    public Devolucion[] getDevoluciones() {
+        return devoluciones;
     }
 
-    public void setEstado(String estado) {
-        this.estado = estado;
+    // Agregar una devolución al arreglo
+    public void agregarDevolucion(Devolucion devolucion) {
+        Devolucion[] nuevasDevoluciones = new Devolucion[this.devoluciones.length + 1];
+        System.arraycopy(this.devoluciones, 0, nuevasDevoluciones, 0, this.devoluciones.length);
+        nuevasDevoluciones[this.devoluciones.length] = devolucion;
+        this.devoluciones = nuevasDevoluciones;
+        this.numeroDeDevoluciones++;
+        System.out.println("Devolución agregada exitosamente.");
     }
 
-    public Date getFechaDevolucion() {
-        return fechaDevolucion;
+    // Consultar todas las devoluciones asociadas
+    public String consultarDevoluciones() {
+        StringBuilder texto = new StringBuilder();
+        for (Devolucion devolucion : devoluciones) {
+            texto.append(devolucion).append("\n");
+        }
+        return texto.toString();
     }
 
-    public void setFechaDevolucion(Date fechaDevolucion) {
-        this.fechaDevolucion = fechaDevolucion;
+    // Buscar una devolución por posición
+    public Devolucion buscarDevolucion(int pos) {
+        if (pos >= 0 && pos < devoluciones.length) {
+            return devoluciones[pos];
+        } else {
+            System.out.println("Posición inválida.");
+            return null;
+        }
     }
 
-    public String getObservaciones() {
-        return observaciones;
+    // Editar una devolución por posición
+    public boolean editarDevolucion(int pos, Devolucion nuevaDevolucion) {
+        if (pos >= 0 && pos < devoluciones.length) {
+            devoluciones[pos] = nuevaDevolucion;
+            System.out.println("Devolución editada exitosamente.");
+            return true;
+        } else {
+            System.out.println("Posición inválida.");
+            return false;
+        }
     }
 
-    public void setObservaciones(String observaciones) {
-        this.observaciones = observaciones;
-    }
-
-    // Métodos funcionales
-    public void aprobarDevolucion() {
-        this.estado = "Aprobada";
-    }
-
-    public void rechazarDevolucion(String motivoRechazo) {
-        this.estado = "Rechazada";
-        this.observaciones = motivoRechazo;
-    }
-
-    public boolean validarCantidad(int cantidadDisponible) {
-        return this.cantidad <= cantidadDisponible;
-    }
-
-    // toString sobrescrito
+    // Metodo toString para mostrar los datos del ItemDevolucion
     @Override
     public String toString() {
-        return String.format("ItemDevolucion [ID: %d, Producto: %s, Cantidad: %d, Razón: %s, Estado: %s, Fecha: %s, Observaciones: %s]",
-                idItemDevolucion, producto, cantidad, razonDevolucion, estado, fechaDevolucion, observaciones);
+        return "ItemDevolucion{" +
+                "ID: " + idItemDevolucion +
+                ", Producto: " + (producto != null ? producto : "No asignado") +
+                ", Cantidad Devuelta: " + cantidadDevuelta +
+                ", Razón de Devolución: '" + razonDevolucion + '\'' +
+                ", Número de Devoluciones: " + numeroDeDevoluciones +
+                '}';
     }
 }

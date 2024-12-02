@@ -1,5 +1,6 @@
 package ec.edu.uce.Consola;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Menu {
@@ -12,8 +13,16 @@ public class Menu {
             System.out.println("1. Ingresar al Sistema");
             System.out.println("2. Salir");
             System.out.print("Seleccione una opción: ");
-            int opcionPrincipal = scanner.nextInt();
-            scanner.nextLine(); // Limpiar buffer
+
+            int opcionPrincipal = -1; // Inicializamos con un valor inválido
+            try {
+                opcionPrincipal = scanner.nextInt();
+                scanner.nextLine(); // Limpiar buffer
+            } catch (InputMismatchException e) {
+                System.out.println("Entrada inválida. Debe ingresar un número entero.");
+                scanner.nextLine(); // Limpiar buffer para evitar bucle infinito
+                continue; // Volver al inicio del bucle
+            }
 
             switch (opcionPrincipal) {
                 case 1:
@@ -42,8 +51,16 @@ public class Menu {
                             System.out.println("3. Gestionar Devoluciones");
                             System.out.println("4. Regresar al Menú Principal");
                             System.out.print("Seleccione una opción: ");
-                            int opcionIngreso = scanner.nextInt();
-                            scanner.nextLine(); // Limpiar buffer
+
+                            int opcionIngreso = -1; // Inicializamos con un valor inválido
+                            try {
+                                opcionIngreso = scanner.nextInt();
+                                scanner.nextLine(); // Limpiar buffer
+                            } catch (InputMismatchException e) {
+                                System.out.println("Entrada inválida. Debe ingresar un número entero.");
+                                scanner.nextLine(); // Limpiar buffer para evitar bucle infinito
+                                continue; // Volver al inicio del bucle
+                            }
 
                             switch (opcionIngreso) {
                                 case 1:

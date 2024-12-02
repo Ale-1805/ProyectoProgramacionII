@@ -1,11 +1,13 @@
 package ec.edu.uce.Dominio;
 
 public class Producto {
+
     //Atributos
     private int Id;
     private String nombre;
     private int cantidad;
     private double precio;
+
     //Constructor
     public Producto (){
         this.Id = 0;
@@ -70,13 +72,15 @@ public class Producto {
     public String getEstado(){
         return verificarEstado();
     }
-    public String mostrarProducto() {
+    // Metodo toString para mostrar los detalles del producto
+    @Override
+    public String toString() {
         return "Producto{" +
-                "Id=" + getId() +
-                ", Nombre= '" + getNombre() + '\'' +
-                ", Cantidad= " + getCantidad() +
-                ", Precio= " + getPrecio() +
-                ", Estado= "+ getEstado() +
+                "Id=" + Id +
+                ", Nombre='" + nombre + '\'' +
+                ", Cantidad=" + cantidad +
+                ", Precio=" + precio +
+                ", Estado=" + getEstado() +
                 '}';
     }
 }

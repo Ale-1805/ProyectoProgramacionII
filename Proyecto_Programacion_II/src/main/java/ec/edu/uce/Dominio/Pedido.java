@@ -1,11 +1,8 @@
 package ec.edu.uce.Dominio;
 
-import java.time.LocalDate;
-import java.util.Date;
-
 public class Pedido {
-    private String id;
-    private LocalDate fecha;
+    private int id; // Ahora es int
+    private String fecha; // Ahora es String con formato dd-MM-yyyy
     private String estado;
     private int numeroItemPedido;
     private int numeroDeProveedores;
@@ -13,7 +10,7 @@ public class Pedido {
     private ItemPedido[] itemsPedidos;
 
     // Constructor con parámetros
-    public Pedido(String id, LocalDate fecha, String estado, int numeroItems, int numeroProveedores) {
+    public Pedido(int id, String fecha, String estado, int numeroItems, int numeroProveedores) {
         this.id = id;
         this.fecha = fecha;
         this.estado = estado;
@@ -25,46 +22,39 @@ public class Pedido {
 
     // Constructor por defecto
     public Pedido() {
-        this.id = "000";
-        this.fecha = LocalDate.now();  // Inicializamos con la fecha actual
-        this.estado = "Sin Estado";
+        this.id = 0;
+        this.fecha = "S/F"; // Fecha por defecto
+        this.estado = "S/E";
         this.numeroItemPedido = 0;
         this.numeroDeProveedores = 0;
-        this.proveedores = new Proveedor[3];  // Capacidad predeterminada
-        this.itemsPedidos = new ItemPedido[3];  // Capacidad predeterminada
+        this.proveedores = new Proveedor[3];
+        this.itemsPedidos = new ItemPedido[3];
     }
 
-    // Métodos GET y SET
-
-    public void setId(String id) {
-        if (id != null && !id.trim().isEmpty()) {
+    // Métodos SET y GET
+    public void setId(int id) {
+        if (id > 0) {
             this.id = id;
-        } else {
-            System.out.println("El ID no puede ser nulo o vacío.");
         }
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setFecha(LocalDate fecha) {
-        if (fecha != null) {
+    public void setFecha(String fecha) {
+        if (fecha != null && !fecha.trim().isEmpty()) {
             this.fecha = fecha;
-        } else {
-            System.out.println("La fecha no puede ser nula.");
         }
     }
 
-    public LocalDate getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
     public void setEstado(String estado) {
         if (estado != null && (estado.equalsIgnoreCase("Entregado") || estado.equalsIgnoreCase("En Camino"))) {
             this.estado = estado;
-        } else {
-            System.out.println("El estado debe ser 'Entregado' o 'En Camino'.");
         }
     }
 
@@ -72,17 +62,6 @@ public class Pedido {
         return estado;
     }
 
-    // Metodo para agregar un proveedor
-    public void agregarProveedor(int id, String nombre, String contacto) {
-        if (numeroDeProveedores < proveedores.length) {
-            proveedores[numeroDeProveedores] = new Proveedor(id, nombre, contacto);
-            numeroDeProveedores++;
-        } else {
-            System.out.println("No se puede agregar más proveedores, el arreglo está lleno.");
-        }
-    }
-
-    // Métodos para los proveedores
     public Proveedor[] getProveedores() {
         return proveedores;
     }
@@ -92,7 +71,6 @@ public class Pedido {
         this.numeroDeProveedores = proveedores.length;
     }
 
-    // Metodos para los ítems de pedido
     public ItemPedido[] getItemsPedidos() {
         return itemsPedidos;
     }
@@ -102,20 +80,84 @@ public class Pedido {
         this.numeroItemPedido = itemsPedidos.length;
     }
 
-    // Metodo para mostrar los datos del pedido
+    //Otros metodos
+
+    //toString
     public String datosPedido() {
         StringBuilder proveedorInfo = new StringBuilder();
         for (int i = 0; i < numeroDeProveedores; i++) {
-            proveedorInfo.append(proveedores[i].toString()).append("\n");
+            proveedorInfo.append(proveedores[i].mostrarProveedor()).append("\n");
         }
+        return "Id: " + id +
+                "\nFecha: " + fecha +
+                "\nEstado: " + estado +
+                "\nNumero de Items Pedidos: " + numeroItemPedido +
+                "\nNumero de Proveedores: " + numeroDeProveedores +
+                "\nProveedores:\n" + proveedorInfo;
+    }
 
-        StringBuilder itemInfo = new StringBuilder();
-        for (int i = 0; i < numeroItemPedido; i++) {
-            itemInfo.append(itemsPedidos[i].toString()).append("\n");
+    //Agregar Proveedor
+    public void agregarProveedor(int id, String nombre, String contacto) {
+        if (numeroDeProveedores < proveedores.length) {
+            proveedores[numeroDeProveedores] = new Proveedor(id, nombre, contacto);
+            numeroDeProveedores++;
+        } else {
+            System.out.println("No se pueden agregar más proveedores.");
         }
+    }
 
-        return "Id: " + id + "\nFecha: " + fecha + "\nEstado: " + estado + "\nNúmero de Ítems Pedidos: " + numeroItemPedido +
-                "\nNúmero de Proveedores: " + numeroDeProveedores + "\nProveedores:\n" + proveedorInfo +
-                "\nÍtems Pedidos:\n" + itemInfo;
+    //Agregar Item
+    public void agregarItemPedido(int idItem, Producto producto, int cantidad, double precioUnitario, String estado) {
+        if (numeroItemPedido >= itemsPedidos.length) {
+            // Expandir el arreglo
+            ItemPedido[] nuevoArreglo = new ItemPedido[itemsPedidos.length + 1];
+            System.arraycopy(itemsPedidos, 0, nuevoArreglo, 0, itemsPedidos.length);
+            itemsPedidos = nuevoArreglo;
+        }
+        itemsPedidos[numeroItemPedido] = new ItemPedido();
+        numeroItemPedido++;
+    }
+
+    //Consultar pedido
+    public String consultarPedidos() {
+        StringBuilder texto = new StringBuilder("Pedidos registrados:\n");
+        texto.append(datosPedido()).append("\n");
+        return texto.toString();
+    }
+
+    //Buscar pedido
+    public Pedido buscarPedido(int pos) {
+        if (pos >= 0 && pos < itemsPedidos.length) {
+            System.out.println("Item encontrado: " + itemsPedidos[pos]);
+            return this;
+        }
+        System.out.println("Posición inválida.");
+        return null;
+    }
+
+    //Editar pedido
+    public boolean editarPedido(int pos, int nuevoId, String nuevaFecha, String nuevoEstado) {
+        if (pos >= 0 && pos < itemsPedidos.length) {
+            this.id = nuevoId;
+            this.fecha = nuevaFecha;
+            this.estado = nuevoEstado;
+            return true;
+        }
+        return false; // Posición inválida
+    }
+
+    //Inicializa con datos de prueba
+    public void inicializarPedidos() {
+        //Crear productos
+        Producto producto1 = new Producto(1, "Producto A", 10, 20.0); // id, nombre, cantidad, precio
+        Producto producto2 = new Producto(2, "Producto B", 5, 15.0);  // id, nombre, cantidad, precio
+
+        //Agregar itempedido
+        this.agregarItemPedido(1, producto1, 2, 20.0, "En Camino");
+        this.agregarItemPedido(2, producto2, 3, 15.0, "Entregado");
+
+        //Agregar proveedores
+        this.agregarProveedor(1, "Proveedor A", "contactoA@ejemplo.com");
+        this.agregarProveedor(2, "Proveedor B", "contactoB@ejemplo.com");
     }
 }
