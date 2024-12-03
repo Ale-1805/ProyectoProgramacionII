@@ -36,11 +36,20 @@ public class TestItemPedido {
         System.out.println("\nProductos después de editar el segundo producto:");
         System.out.println(itemPedido.consultarProductos());
 
-        // 3. Consultar el estado del ItemPedido
+        // 3. Probar eliminar un producto
+        boolean eliminarResp = itemPedido.eliminarProducto(1); // Eliminar el producto en la posición 1
+        if (eliminarResp) {
+            System.out.println("\nProductos después de eliminar el segundo producto:");
+            System.out.println(itemPedido.consultarProductos());
+        } else {
+            System.out.println("Error al eliminar el producto.");
+        }
+
+        // 4. Consultar el estado del ItemPedido
         System.out.println("\nEstado del ItemPedido:");
         System.out.println(itemPedido.getEstado());
 
-        // 4. Probar el metodo toString del ItemPedido
+        // 5. Probar el metodo toString del ItemPedido
         System.out.println("\nInformación del ItemPedido:");
         System.out.println(itemPedido.toString());
     }
