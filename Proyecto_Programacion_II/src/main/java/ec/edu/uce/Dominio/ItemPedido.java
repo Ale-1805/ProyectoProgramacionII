@@ -154,6 +154,27 @@ public class ItemPedido {
         }
     }
 
+    // Eliminar un producto por posición
+public boolean eliminarProducto(int pos) {
+    if (pos >= 0 && pos < productos.length) {
+        Producto[] nuevosProductos = new Producto[productos.length - 1];
+        
+        // Copiar los productos antes de la posición
+        System.arraycopy(productos, 0, nuevosProductos, 0, pos);
+        
+        // Copiar los productos después de la posición
+        System.arraycopy(productos, pos + 1, nuevosProductos, pos, productos.length - pos - 1);
+        
+        // Actualizar el arreglo de productos
+        productos = nuevosProductos;
+        numeroDeProductos--;
+        System.out.println("Producto eliminado exitosamente.");
+        return true;
+    } else {
+        System.out.println("Error: Posición inválida.");
+        return false;
+    }
+}
     // Metodo toString
     @Override
     public String toString() {
