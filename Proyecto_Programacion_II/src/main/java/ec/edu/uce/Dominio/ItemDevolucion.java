@@ -110,6 +110,28 @@ public class ItemDevolucion {
         }
     }
 
+    // Eliminar una devolución por posición
+    public boolean eliminarDevolucion(int pos) {
+    if (pos >= 0 && pos < devoluciones.length) {
+        Devolucion[] nuevasDevoluciones = new Devolucion[devoluciones.length - 1];
+        
+        // Copiar los elementos antes de la posición
+        System.arraycopy(devoluciones, 0, nuevasDevoluciones, 0, pos);
+        
+        // Copiar los elementos después de la posición
+        System.arraycopy(devoluciones, pos + 1, nuevasDevoluciones, pos, devoluciones.length - pos - 1);
+        
+        // Actualizar el arreglo de devoluciones
+        devoluciones = nuevasDevoluciones;
+        numeroDeDevoluciones--;
+        System.out.println("Devolución eliminada exitosamente.");
+        return true;
+    } else {
+        System.out.println("Posición inválida.");
+        return false;
+    }
+}
+
     // Metodo toString para mostrar los datos del ItemDevolucion
     @Override
     public String toString() {
