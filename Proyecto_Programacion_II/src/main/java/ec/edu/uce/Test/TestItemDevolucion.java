@@ -41,15 +41,24 @@ public class TestItemDevolucion {
         System.out.println("\nDevoluciones después de editar la segunda devolución:");
         System.out.println(itemDevolucion.consultarDevoluciones());
 
-        // 3. Consultar un producto asociado al ItemDevolucion
+        // 3. Probar eliminar una devolución
+        boolean eliminado = itemDevolucion.eliminarDevolucion(1); // Elimina la devolución en la posición 1
+        if (eliminado) {
+            System.out.println("\nDevoluciones después de eliminar la segunda devolución:");
+            System.out.println(itemDevolucion.consultarDevoluciones());
+        } else {
+            System.out.println("Error al eliminar la devolución.");
+        }
+
+        // 4. Consultar un producto asociado al ItemDevolucion
         System.out.println("\nProducto asociado al ItemDevolucion:");
         System.out.println(itemDevolucion.getProducto().toString());
 
-        // 4. Consultar la cantidad devuelta
+        // 5. Consultar la cantidad devuelta
         System.out.println("\nCantidad devuelta en el ItemDevolucion:");
         System.out.println(itemDevolucion.getCantidadDevuelta());
 
-        // 5. Probar el metodo toString del ItemDevolucion
+        // 6. Probar el metodo toString del ItemDevolucion
         System.out.println("\nInformación del ItemDevolucion:");
         System.out.println(itemDevolucion.toString());
     }
